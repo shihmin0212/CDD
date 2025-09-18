@@ -1,0 +1,768 @@
+/* -------------------------------------------
+ * 全域與通用樣式
+ * ------------------------------------------- */
+* {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  margin: 0; /* 確保 body 沒有預設的 margin */
+}
+
+#app {
+    display: flex;
+    min-height: 100vh;
+}
+
+h1, h2, h3, header {
+    color: #003366; /* E.SUN 深藍 */
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+h1 { font-size: 2.2em; }
+h2 { font-size: 1.8em; }
+h3 { font-size: 1.5em; }
+header { font-size: 2em; } /* 當日代理查詢頁面的標題 */
+
+.container {
+    padding: 20px;
+}
+
+/* -------------------------------------------
+ * 主介面佈局樣式 (Layout)
+ * ------------------------------------------- */
+.pageWarpper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: row; /* 將主容器改為橫向排列 */
+}
+#contentWarpper {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #f5f5f5;
+}
+.pageContentContainer {
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+/* -------------------------------------------
+ * 麵包屑導航 (Breadcrumb)
+ * ------------------------------------------- */
+.breadcrumbContainer {
+    margin-bottom: 20px;
+}
+.breadcrumbContainer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #666;
+}
+.breadcrumbContainer li:not(:last-child)::after {
+    content: '>';
+    margin: 0 8px;
+    color: #ccc;
+}
+.breadcrumbContainer li.now {
+    font-weight: bold;
+    color: #003366;
+}
+
+/* -------------------------------------------
+ * 流程進度條樣式
+ * ------------------------------------------- */
+.progressbar-container {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+.progressbar-container li {
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+.progress-title {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.progress-note {
+    font-size: 12px;
+    color: #666;
+    height: 30px;
+}
+
+.progress-dot {
+    width: 20px;
+    height: 20px;
+    background: #ccc;
+    border-radius: 50%;
+    margin: 5px auto;
+    border: 3px solid #ccc;
+    transition: all 0.3s ease;
+}
+
+.progressbar-container li:not(:last-child)::after {
+    content: '';
+    height: 3px;
+    background: #ccc;
+    position: absolute;
+    top: 35px;
+    left: 50%;
+    width: 100%;
+    z-index: -1;
+    transition: background 0.3s ease;
+}
+
+/* 進度條狀態樣式 */
+.progressbar-container li.done .progress-dot {
+    background: #fff;
+    border-color: #00a19b;
+}
+
+.progressbar-container li.done::after {
+    background: #00a19b;
+}
+
+.progressbar-container li.now .progress-dot {
+    background: #fff;
+    border-color: #003366; /* E.SUN 深藍 */
+    transform: scale(1.2);
+}
+
+.progressbar-container li.now .progress-title {
+    color: #003366;
+}
+
+/* -------------------------------------------
+ * 表單與表格樣式
+ * ------------------------------------------- */
+.formContainer {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.fillForm {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.formSectionTitle {
+    background: #00a19b;
+    color: #fff;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 5px 5px 0 0;
+    margin: -20px -20px 20px -20px;
+}
+.formSectionTitle label { margin-left: 10px; }
+
+.formRow {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+.formRow:last-child {
+    border-bottom: none;
+}
+
+.formRow.set4 {
+    display: grid;
+    grid-template-columns: 100px 1fr 100px 1fr;
+    align-items: center;
+    gap: 10px;
+}
+
+.formCell {
+    flex: 1;
+    padding: 0 10px;
+}
+
+.formTitle {
+    font-weight: bold;
+    color: #555;
+    padding: 0;
+    text-align: right;
+}
+
+.formRow.formTitle {
+    background-color: #e9ecef;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px 5px 0 0;
+}
+.formRow.formTitle .formCell {
+    font-weight: bold;
+    padding: 12px 10px;
+    text-align: center;
+}
+
+.listForm .formRow:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.listForm .formRow:last-child {
+    border-bottom: none;
+}
+
+.listForm .formRow {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    display: grid;
+}
+
+/* -------------------------------------------
+ * 按鈕與輸入欄位樣式
+ * ------------------------------------------- */
+.action-buttons {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    text-align: right;
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.btn-red {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-blue, .btn-green {
+    background-color: #00a19b;
+    color: white;
+}
+
+.btn-blue:hover, .btn-green:hover {
+    background-color: #007a72;
+}
+
+.btn-red:hover {
+    background-color: #c82333;
+}
+
+.btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* 列表操作按鈕 */
+.btnListEdit, .btnListSave, .btnListCancel {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 5px;
+}
+.btnListEdit img, .btnListSave img, .btnListCancel img {
+    width: 24px;
+    height: 24px;
+    filter: none;
+}
+.btnListEdit { background-color: #fff; border-radius: 0; }
+.btnListSave { background-color: #fff; border-radius: 0; }
+.btnListCancel { background-color: #fff; border-radius: 0; }
+
+.uiStyle {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btnDarkBlue {
+    background-color: #003366;
+    color: #fff;
+}
+.btnDarkBlue:hover {
+    background-color: #0056b3;
+}
+.filterit {
+    filter: invert(100%) sepia(20%) saturate(0%) hue-rotate(89deg) brightness(119%) contrast(101%);
+}
+
+#unsolvedSearchBtnContainer {
+    text-align: right;
+    margin-top: 20px;
+}
+
+/* -------------------------------------------
+ * 訊息視窗與載入中樣式
+ * ------------------------------------------- */
+.message-overlay, .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.message-overlay.show, .loading-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.message-box {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    width: 300px;
+    transform: scale(0.95);
+    transition: transform 0.3s ease-in-out;
+}
+
+.message-overlay.show .message-box {
+    transform: scale(1);
+}
+
+.message-box p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+.message-box button {
+    background-color: #00a19b;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.message-box button:hover {
+    background-color: #007a72;
+}
+
+.loading-spinner {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #003366;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+.loading-text {
+    margin-top: 15px;
+    color: #fff;
+    font-size: 1.2em;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* -------------------------------------------
+ * 流程紀錄與分頁樣式
+ * ------------------------------------------- */
+.history-section {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.history-list {
+    list-style: none;
+    padding: 0;
+}
+
+.history-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9em;
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.history-action-from {
+    font-weight: bold;
+    color: #003366;
+}
+
+.history-timestamp {
+    color: #888;
+    margin-top: 5px;
+}
+
+.pagerContainer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagerContainer ul {
+    list-style: none;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.pagerContainer li {
+    padding: 10px 15px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagerContainer li:hover {
+    background-color: #f0f0f0;
+}
+
+.pagerContainer li.now {
+    background-color: #00a19b;
+    color: #fff;
+}
+
+/* 新增通用卡片容器樣式 */
+.card-container {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* 優化表單容器樣式 */
+.form-container {
+    display: grid;
+    gap: 20px;
+}
+
+/* 優化搜尋欄位組合 */
+.search-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* 優化下拉選單樣式 */
+.select-field {
+    position: relative;
+    width: 100%;
+}
+
+.select-field select {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fff;
+    font-size: 14px;
+    color: #333;
+    appearance: none;
+    cursor: pointer;
+}
+
+.select-field::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #666;
+    pointer-events: none;
+}
+
+/* 自訂下拉選單樣式 */
+.select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.custom-select {
+    width: 100%;
+    padding: 8px 32px 8px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    appearance: none;
+    cursor: pointer;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* 下拉箭頭 */
+.select-wrapper::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #666;
+    pointer-events: none;
+}
+
+/* 懸停效果 */
+.custom-select:hover {
+    border-color: #1e88e5;
+}
+
+/* 焦點效果 */
+.custom-select:focus {
+    border-color: #1e88e5;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(30, 136, 229, 0.25);
+}
+
+/* 禁用狀態 */
+.custom-select:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* 下拉選單選項樣式 */
+.custom-select option {
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+/* 優化表格樣式 */
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+}
+
+.data-table th,
+.data-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.data-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* 優化按鈕群組樣式 */
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+/* 優化表單驗證樣式 */
+.form-field {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.form-field.error input,
+.form-field.error select {
+    border-color: #dc3545;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* 優化載入中狀態 */
+.loading-state {
+    position: relative;
+    opacity: 0.7;
+}
+
+.loading-state::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 響應式調整 */
+@media screen and (max-width: 768px) {
+    .formRow.set4 {
+        grid-template-columns: 100px 1fr;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+}
+
+/* 優化流程進度條響應式設計 */
+@media screen and (max-width: 768px) {
+    .progressbar-container {
+        flex-direction: column;
+    }
+    
+    .progressbar-container li {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+    
+    .progressbar-container li.done .progress-dot {
+        background: #fff;
+        border-color: #00a19b;
+    }
+
+    .progressbar-container li.done::after {
+        background: #00a19b;
+    }
+
+    .progressbar-container li.now .progress-dot {
+        background: #fff;
+        border-color: #003366; /* E.SUN 深藍 */
+        transform: scale(1.2);
+    }
+
+    .progressbar-container li.now .progress-title {
+        color: #003366;
+    }
+}
+
+/* 優化表單響應式設計 */
+@media screen and (max-width: 768px) {
+    .formContainer {
+        padding: 15px;
+    }
+
+    .formSectionTitle {
+        font-size: 1.2em;
+        padding: 8px;
+    }
+
+    .formRow {
+        padding: 8px 0;
+    }
+
+    .formCell {
+        padding: 0 8px;
+    }
+
+    .formTitle {
+        font-size: 0.9em;
+    }
+
+    .listForm .formRow {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+/* 優化表格響應式設計 */
+@media screen and (max-width: 768px) {
+    .data-table th,
+    .data-table td {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    .data-table th {
+        background-color: #e9ecef;
+        color: #333;
+    }
+}
+
+/* 優化按鈕響應式設計 */
+@media screen and (max-width: 768px) {
+    .btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+/* 優化下拉選單響應式設計 */
+@media screen and (max-width: 768px) {
+    .select-field select {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    .custom-select {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+}
