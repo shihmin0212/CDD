@@ -275,7 +275,11 @@ namespace CDD.Api.Startup
             services.AddScoped<UserRepository>();
             services.AddScoped<SystemRepository>();
             services.AddScoped<AdminSystemRepository>();
+            // 若尚未註冊你們的 IRequest 實作，加入這行（Request 請替換成你的實作類別名稱）
+            services.AddScoped<IRequest, Request>();
 
+            // 將 IExternalFlowApiClient 綁定到使用 IRequest 的實作
+            services.AddScoped<IExternalFlowApiClient, ExternalFlowApiClient_ByRequest>();
             services.AddMemoryCache();
             services.AddSingleton<IMemoryCacheHelper, MemoryCacheHelper>();
 
