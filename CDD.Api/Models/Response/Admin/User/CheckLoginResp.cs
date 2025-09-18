@@ -1,4 +1,4 @@
-﻿namespace Sample.Api.Models.Response.Admin.User
+﻿namespace CDD.Api.Models.Response.Admin.User
 {
     /// <summary>
     /// 登入

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
-using Sample.Api.Repositories.DTO.Admin;
+using CDD.Api.Repositories.DTO.Admin;
 
-namespace Sample.Api.Models.Response.Admin.System
+namespace CDD.Api.Models.Response.Admin.System
 {
     public class SystemViewDataResp
     {

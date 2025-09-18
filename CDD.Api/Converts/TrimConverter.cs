@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Sample.Api.Converts
+namespace CDD.Api.Converts
 {
     public class TrimConverter : JsonConverter
     {

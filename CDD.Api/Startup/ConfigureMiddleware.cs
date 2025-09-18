@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.HttpOverrides;
 
-namespace Sample.Api.Startup
+namespace CDD.Api.Startup
 {
     public static class ConfigureMiddleware
     {

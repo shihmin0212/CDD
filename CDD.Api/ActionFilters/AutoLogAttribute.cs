@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
-using Sample.Api.Attributes;
-using Sample.Api.Helpers;
-using Sample.Api.Models.DTO;
+using CDD.Api.Attributes;
+using CDD.Api.Helpers;
+using CDD.Api.Models.DTO;
 
-namespace Sample.Api.ActionFilters
+namespace CDD.Api.ActionFilters
 {
     /// <summary>
     /// Auto Log Request And Response 

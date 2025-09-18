@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 
-namespace Sample.Api.Converts
+namespace CDD.Api.Converts
 {
     public class ReplaceSpecialCharConverter : JsonConverter
     {

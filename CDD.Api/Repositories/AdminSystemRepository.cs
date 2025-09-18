@@ -1,10 +1,10 @@
 ﻿using System.Data;
 using Dapper;
-using Sample.Api.Helpers;
-using Sample.Api.Models.DTO;
-using Sample.Api.Models.Request.Admin.System;
+using CDD.Api.Helpers;
+using CDD.Api.Models.DTO;
+using CDD.Api.Models.Request.Admin.System;
 
-namespace Sample.Api.Repositories
+namespace CDD.Api.Repositories
 {
     /// <summary>
     /// 系統別 AdminSystemRepository
@@ -46,7 +46,7 @@ namespace Sample.Api.Repositories
             param.Add("HashKey", hashKey);
             param.Add("IVKey", ivKey);
             param.Add("IsActive", req.IsActive);
-            int rowCount = _dapperHelper.Execute(ConnectionStringKey.ERMS, sql, param, CommandType.StoredProcedure);
+            int rowCount = _dapperHelper.Execute(ConnectionStringKey.CDD, sql, param, CommandType.StoredProcedure);
             return (rowCount == 1);
         }
 
@@ -66,7 +66,7 @@ namespace Sample.Api.Repositories
             DynamicParameters param = new DynamicParameters();
             param.Add("system", systemName);
             param.Add("IsActive", isActive);
-            int rowCount = _dapperHelper.Execute(ConnectionStringKey.ERMS, sql, param, CommandType.StoredProcedure);
+            int rowCount = _dapperHelper.Execute(ConnectionStringKey.CDD, sql, param, CommandType.StoredProcedure);
             return (rowCount == 1);
         }
 
@@ -91,12 +91,12 @@ namespace Sample.Api.Repositories
             param.Add("HashKey", hashKey);
             param.Add("IVKey", ivKey);
             param.Add("IsActive", req.IsActive);
-            int rowCount = _dapperHelper.Execute(ConnectionStringKey.ERMS, sql, param, CommandType.StoredProcedure);
+            int rowCount = _dapperHelper.Execute(ConnectionStringKey.CDD, sql, param, CommandType.StoredProcedure);
             return (rowCount == 1);
         }
 
         /// <summary>
-        /// ERMS 系統管理資料 後端分頁功能
+        /// CDD 系統管理資料 後端分頁功能
         /// </summary>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
@@ -107,7 +107,7 @@ namespace Sample.Api.Repositories
             param.Add("System", string.IsNullOrEmpty(system) ? null : system);
             param.Add("PageNumber", pageNumber < 1 ? 1 : pageNumber);
             param.Add("PageSize", pageSize < 1 ? 10 : pageSize);
-            return _dapperHelper.Query<DTO.Admin.SystemAdminDTO>(ConnectionStringKey.ERMS, sql, param, CommandType.StoredProcedure);
+            return _dapperHelper.Query<DTO.Admin.SystemAdminDTO>(ConnectionStringKey.CDD, sql, param, CommandType.StoredProcedure);
         }
 
     }

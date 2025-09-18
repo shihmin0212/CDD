@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Http.Features;
 using Newtonsoft.Json;
 using NLog;
 using NLog.Web;
-using Sample.Api.Middlewares;
-using Sample.Api.Models.DTO;
-using Sample.Api.Startup;
+using CDD.Api.Middlewares;
+using CDD.Api.Models.DTO;
+using CDD.Api.Startup;
 
 #region Nlog Init
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Sample.Api.Models.Request.Admin
+namespace CDD.Api.Models.Request.Admin
 {
     /// <summary>
     /// 建立用戶

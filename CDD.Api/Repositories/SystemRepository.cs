@@ -1,9 +1,9 @@
 ﻿using System.Data;
 using Dapper;
-using Sample.Api.Helpers;
-using Sample.Api.Models.DTO;
+using CDD.Api.Helpers;
+using CDD.Api.Models.DTO;
 
-namespace Sample.Api.Repositories
+namespace CDD.Api.Repositories
 {
     /// <summary>
     /// 系統別 SystemRepository
@@ -33,7 +33,7 @@ namespace Sample.Api.Repositories
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("ApiKey", apiKey);
             IEnumerable<DTO.SystemDTO>? rows;
-            rows = _dapperHelper.Query<DTO.SystemDTO>(ConnectionStringKey.ERMS, sql, param: parameters, CommandType.StoredProcedure);
+            rows = _dapperHelper.Query<DTO.SystemDTO>(ConnectionStringKey.CDD, sql, param: parameters, CommandType.StoredProcedure);
             return rows?.FirstOrDefault();
         }
 
@@ -49,7 +49,7 @@ namespace Sample.Api.Repositories
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("System", systemID);
             IEnumerable<DTO.SystemDTO>? rows;
-            rows = _dapperHelper.Query<DTO.SystemDTO>(ConnectionStringKey.ERMS, sql, param: parameters, CommandType.StoredProcedure);
+            rows = _dapperHelper.Query<DTO.SystemDTO>(ConnectionStringKey.CDD, sql, param: parameters, CommandType.StoredProcedure);
             return rows?.FirstOrDefault();
         }
 
@@ -61,7 +61,7 @@ namespace Sample.Api.Repositories
         public IEnumerable<DTO.SystemDTO>? GetSystemList()
         {
             string sql = _storedProcedures["usp_GetSystemList"] ?? throw new ArgumentNullException("usp_GetExternalSystemList not found in appsetting");
-            return _dapperHelper.Query<DTO.SystemDTO>(ConnectionStringKey.ERMS, sql, CommandType.StoredProcedure);
+            return _dapperHelper.Query<DTO.SystemDTO>(ConnectionStringKey.CDD, sql, CommandType.StoredProcedure);
         }
 
 

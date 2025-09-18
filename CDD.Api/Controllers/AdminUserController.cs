@@ -1,18 +1,18 @@
 ﻿using System.Security.Cryptography;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Sample.Api.Attributes;
-using Sample.Api.Helpers;
-using Sample.Api.Libs;
-using Sample.Api.Models.Request;
-using Sample.Api.Models.Request.Admin;
-using Sample.Api.Models.Response;
-using Sample.Api.Models.Response.Admin.User;
-using Sample.Api.Repositories;
-using Sample.Api.Repositories.DTO;
+using CDD.Api.Attributes;
+using CDD.Api.Helpers;
+using CDD.Api.Libs;
+using CDD.Api.Models.Request;
+using CDD.Api.Models.Request.Admin;
+using CDD.Api.Models.Response;
+using CDD.Api.Models.Response.Admin.User;
+using CDD.Api.Repositories;
+using CDD.Api.Repositories.DTO;
 
 
-namespace Sample.Api.Controllers
+namespace CDD.Api.Controllers
 {
     [Route("api/Admin/User")]
     [ApiController]

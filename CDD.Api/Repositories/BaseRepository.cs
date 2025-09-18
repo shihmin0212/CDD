@@ -1,6 +1,6 @@
-﻿using Sample.Api.Helpers;
+﻿using CDD.Api.Helpers;
 
-namespace Sample.Api.Repositories
+namespace CDD.Api.Repositories
 {
     public class BaseRepository<T>
     {

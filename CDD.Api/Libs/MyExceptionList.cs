@@ -1,4 +1,4 @@
-﻿namespace Sample.Api.Libs
+﻿namespace CDD.Api.Libs
 {
     public sealed class MyExceptionList
     {
@@ -10,7 +10,7 @@
         /// </summary>
         /// <param name="debug"></param>
         /// <returns></returns>
-        public static MyExceptionMessage ModelBindingError(Sample.Api.ActionFilters.ModelBindError? debug = null)
+        public static MyExceptionMessage ModelBindingError(CDD.Api.ActionFilters.ModelBindError? debug = null)
         {
             return new MyExceptionMessage(0, GeneralErrorTitle, debug?.ErrorMessage ?? GeneralErrorMsg, debug);
         }

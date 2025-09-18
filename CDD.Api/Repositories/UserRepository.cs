@@ -1,11 +1,11 @@
 ﻿using System.Data;
 using System.Security.Cryptography;
 using Dapper;
-using Sample.Api.Helpers;
-using Sample.Api.Models.DTO;
-using Sample.Api.Repositories.DTO;
+using CDD.Api.Helpers;
+using CDD.Api.Models.DTO;
+using CDD.Api.Repositories.DTO;
 
-namespace Sample.Api.Repositories
+namespace CDD.Api.Repositories
 {
     public class UserRepository : BaseRepository<UserRepository>
     {
@@ -21,7 +21,7 @@ namespace Sample.Api.Repositories
         public IEnumerable<User>? GetAllUser()
         {
             string sql = _storedProcedures["usp_GetAllUser"] ?? throw new ArgumentNullException("usp_GetAllUser not found in appsetting");
-            return _dapperHelper.Query<User>(ConnectionStringKey.ERMS, sql, CommandType.StoredProcedure);
+            return _dapperHelper.Query<User>(ConnectionStringKey.CDD, sql, CommandType.StoredProcedure);
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Sample.Api.Repositories
             string sql = _storedProcedures["usp_GetUserByEmployeeNo"] ?? throw new ArgumentNullException("usp_GetUserByEmployeeNo not found in appsetting");
             var param = new DynamicParameters();
             param.Add("EmployeeNo", userID);
-            IEnumerable<User>? rows = _dapperHelper.Query<User>(ConnectionStringKey.ERMS, sql, param, CommandType.StoredProcedure);
+            IEnumerable<User>? rows = _dapperHelper.Query<User>(ConnectionStringKey.CDD, sql, param, CommandType.StoredProcedure);
             return rows?.SingleOrDefault();
         }
 
@@ -92,7 +92,7 @@ namespace Sample.Api.Repositories
             param.Add("Base64PasswordSignature", hashedPassword);
             param.Add("Base64Salt", base64Salt);
             param.Add("Pepper", pepper);
-            int rowCount = _dapperHelper.Execute(ConnectionStringKey.ERMS, sql, param, CommandType.StoredProcedure);
+            int rowCount = _dapperHelper.Execute(ConnectionStringKey.CDD, sql, param, CommandType.StoredProcedure);
             return (rowCount == 1);
         }
     }

@@ -1,7 +1,7 @@
-﻿namespace Sample.Api.Models.DTO
+﻿namespace CDD.Api.Models.DTO
 {
     public class ConnectionStringKey
     {
-        public static string ERMS { get; } = "ERMS";
+        public static string CDD { get; } = "CDD";
     }
 }

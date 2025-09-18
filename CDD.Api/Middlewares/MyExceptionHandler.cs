@@ -1,11 +1,11 @@
 ﻿using System.Net;
 using Newtonsoft.Json;
-using Sample.Api.Helpers;
-using Sample.Api.Libs;
-using Sample.Api.Models.DTO;
-using Sample.Api.Models.Response;
+using CDD.Api.Helpers;
+using CDD.Api.Libs;
+using CDD.Api.Models.DTO;
+using CDD.Api.Models.Response;
 
-namespace Sample.Api.Middlewares
+namespace CDD.Api.Middlewares
 {
     public class MyExceptionHandler
     {

@@ -4,9 +4,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-using Sample.Api.Models.DTO;
+using CDD.Api.Models.DTO;
 
-namespace Sample.Api.Libs
+namespace CDD.Api.Libs
 {
     public interface IRequest
     {

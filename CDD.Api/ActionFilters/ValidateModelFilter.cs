@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Sample.Api.Libs;
+using CDD.Api.Libs;
 
-namespace Sample.Api.ActionFilters
+namespace CDD.Api.ActionFilters
 {
     /// <summary>
     /// ModelState 驗證

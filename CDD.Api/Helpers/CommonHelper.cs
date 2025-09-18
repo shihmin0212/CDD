@@ -2,7 +2,7 @@
 using System.Web;
 using Newtonsoft.Json;
 
-namespace Sample.Api.Helpers
+namespace CDD.Api.Helpers
 {
     public class CommonHelper
     {

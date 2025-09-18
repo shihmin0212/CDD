@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
-using Sample.Api.Repositories.DTO;
+using CDD.Api.Repositories.DTO;
 
-namespace Sample.Api.Models.Response.Admin.System
+namespace CDD.Api.Models.Response.Admin.System
 {
     public class GetAllSystemInfoResp
     {

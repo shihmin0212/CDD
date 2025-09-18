@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Primitives;
 
-namespace Sample.Api.Helpers
+namespace CDD.Api.Helpers
 {
     public interface IMemoryCacheHelper
     {

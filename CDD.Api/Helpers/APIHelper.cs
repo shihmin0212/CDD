@@ -1,6 +1,6 @@
-﻿using Sample.Api.Libs;
+﻿using CDD.Api.Libs;
 
-namespace Sample.Api.Helpers
+namespace CDD.Api.Helpers
 {
     public class APIHelper
     {

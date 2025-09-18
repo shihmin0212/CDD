@@ -1,15 +1,15 @@
 ﻿using System.Data;
 using Microsoft.AspNetCore.Mvc;
-using Sample.Api.Attributes;
-using Sample.Api.Helpers;
-using Sample.Api.Libs;
-using Sample.Api.Models.Request.Admin.System;
-using Sample.Api.Models.Response;
-using Sample.Api.Models.Response.Admin.System;
-using Sample.Api.Repositories;
-using Sample.Api.Repositories.DTO.Admin;
+using CDD.Api.Attributes;
+using CDD.Api.Helpers;
+using CDD.Api.Libs;
+using CDD.Api.Models.Request.Admin.System;
+using CDD.Api.Models.Response;
+using CDD.Api.Models.Response.Admin.System;
+using CDD.Api.Repositories;
+using CDD.Api.Repositories.DTO.Admin;
 
-namespace Sample.Api.Controllers
+namespace CDD.Api.Controllers
 {
     [Route("api/Admin/System")]
     [ApiController]

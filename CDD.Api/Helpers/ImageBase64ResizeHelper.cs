@@ -8,7 +8,7 @@ using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;
 
 
-namespace Sample.Api.Helpers
+namespace CDD.Api.Helpers
 {
     public static class ImageBase64ResizeHelper
     {

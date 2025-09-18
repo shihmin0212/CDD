@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace Sample.Api.Helpers
+namespace CDD.Api.Helpers
 {
     /// <summary>
     /// TODO 密碼雜湊

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Sample.Api.Extensions
+namespace CDD.Api.Extensions
 {
     /// <summary>
     /// EnumExtensions 擴充方法

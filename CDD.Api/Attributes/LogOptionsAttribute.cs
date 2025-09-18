@@ -1,4 +1,4 @@
-﻿namespace Sample.Api.Attributes
+﻿namespace CDD.Api.Attributes
 {
     /// <summary>
     /// 停用logging Filter

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.StaticFiles;
 
-namespace Sample.Api.Helpers
+namespace CDD.Api.Helpers
 {
     public static class MimeMappingHelper
     {

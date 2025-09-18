@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Sample.Api.Libs
+namespace CDD.Api.Libs
 {
     public class MyException : Exception
     {

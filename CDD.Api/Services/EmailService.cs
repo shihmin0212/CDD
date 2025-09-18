@@ -1,10 +1,10 @@
 using FluentEmail.Core;
 using FluentEmail.Core.Models;
 using Newtonsoft.Json;
-using Sample.Api.Extensions;
-using Sample.Api.Models.EmailService;
+using CDD.Api.Extensions;
+using CDD.Api.Models.EmailService;
 
-namespace Sample.Api.Services
+namespace CDD.Api.Services
 {
     public interface IEmailService
     {

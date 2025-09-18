@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using Microsoft.Extensions.Primitives;
 
-namespace Sample.Api.Helpers
+namespace CDD.Api.Helpers
 {
     public interface IIPHelper
     {

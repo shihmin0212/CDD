@@ -1,4 +1,4 @@
-﻿namespace Sample.Api.Repositories.DTO
+﻿namespace CDD.Api.Repositories.DTO
 {
     /// <summary>
     /// 使用者資料表 
@@ -31,7 +31,7 @@
         public bool IsDeleted { get; set; } = false;
 
         /// <summary>
-        /// 雜湊後密碼(Token) 驗算後再存入欄位，用erms系統 sha(Base64PasswordSignature) 成Token 給外部系統留存 往後比對
+        /// 雜湊後密碼(Token) 驗算後再存入欄位，用CDD系統 sha(Base64PasswordSignature) 成Token 給外部系統留存 往後比對
         /// </summary>
         public string Base64PasswordSignature { get; set; } = null!;
 

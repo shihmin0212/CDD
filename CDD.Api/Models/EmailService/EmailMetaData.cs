@@ -1,6 +1,6 @@
 ﻿using FluentEmail.Core.Models;
 
-namespace Sample.Api.Models.EmailService
+namespace CDD.Api.Models.EmailService
 {
     public class EmailMetaData
     {

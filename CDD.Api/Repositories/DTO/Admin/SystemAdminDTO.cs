@@ -1,4 +1,4 @@
-﻿namespace Sample.Api.Repositories.DTO.Admin
+﻿namespace CDD.Api.Repositories.DTO.Admin
 {
     /// <summary>
     /// 業務端 外部系統 串接資訊

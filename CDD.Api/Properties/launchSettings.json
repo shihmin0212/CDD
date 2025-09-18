@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "Sample.Api": {
+    "CDD.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

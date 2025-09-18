@@ -12,14 +12,14 @@ using Quartz.Impl;
 using Quartz.Plugin.Interrupt;
 using Quartz.Spi;
 using Quartz.Util;
-using Sample.Api.ActionFilters;
-using Sample.Api.Helpers;
-using Sample.Api.Libs;
-using Sample.Api.Models.DTO;
-using Sample.Api.Repositories;
-using Sample.Api.Services;
+using CDD.Api.ActionFilters;
+using CDD.Api.Helpers;
+using CDD.Api.Libs;
+using CDD.Api.Models.DTO;
+using CDD.Api.Repositories;
+using CDD.Api.Services;
 
-namespace Sample.Api.Startup
+namespace CDD.Api.Startup
 {
     public static class DependencyInjectionSetup
     {
@@ -134,7 +134,7 @@ namespace Sample.Api.Startup
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "ERMS Api Service",
+                    Title = "CDD Api Service",
                     Contact = new OpenApiContact { Name = "陳先生", Email = "nautilustube@gmail.com" },
                     Version = "v1",
                     Description =

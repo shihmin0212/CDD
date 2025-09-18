@@ -1,14 +1,14 @@
 ﻿using System.Reflection;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using Sample.Api.Attributes;
-using Sample.Api.Helpers;
-using Sample.Api.Libs;
-using Sample.Api.Models.DTO;
-using Sample.Api.Repositories;
-using Sample.Api.Repositories.DTO;
+using CDD.Api.Attributes;
+using CDD.Api.Helpers;
+using CDD.Api.Libs;
+using CDD.Api.Models.DTO;
+using CDD.Api.Repositories;
+using CDD.Api.Repositories.DTO;
 
-namespace Sample.Api.Middlewares
+namespace CDD.Api.Middlewares
 {
     /// <summary>
     /// admin Token 驗證

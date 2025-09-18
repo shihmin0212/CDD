@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Sample.Api.Extensions
+namespace CDD.Api.Extensions
 {
     public static class StringExtensions
     {

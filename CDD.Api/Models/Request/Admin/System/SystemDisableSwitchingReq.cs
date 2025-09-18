@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Sample.Api.Models.Request.Admin.System
+namespace CDD.Api.Models.Request.Admin.System
 {
     /// <summary>
     /// 停用系統 Req

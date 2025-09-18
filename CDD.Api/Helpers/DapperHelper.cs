@@ -3,7 +3,7 @@ using System.Data.Common;
 using Dapper;
 using Microsoft.Data.SqlClient;
 
-namespace Sample.Api.Helpers
+namespace CDD.Api.Helpers
 {
     public interface IDapperHelper
     {

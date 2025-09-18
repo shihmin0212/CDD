@@ -1,7 +1,7 @@
-﻿namespace Sample.Api.Models.DTO
+﻿namespace CDD.Api.Models.DTO
 {
     public static class ConstantKey
     {
-        public static string FILE_EXTENSION_NAME { get; } = ".erms";
+        public static string FILE_EXTENSION_NAME { get; } = ".CDD";
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Sample.Api.Models.Response
+﻿namespace CDD.Api.Models.Response
 {
     /// <summary>
     /// 

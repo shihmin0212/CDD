@@ -1,4 +1,4 @@
-﻿namespace Sample.Api.Models.DTO
+﻿namespace CDD.Api.Models.DTO
 {
     public interface ILogBase
     {
