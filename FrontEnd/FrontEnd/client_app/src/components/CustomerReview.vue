@@ -7,25 +7,27 @@
         <li class="now">顧客盡職審查</li>
       </ul>
     </div>
-    <header>客戶盡職審查系統</header>
-    <ul class="progressbar-container">
-      <li v-for="(stage, index) in customerReviewStore.caseData.stages" :key="stage.title" :class="getStageClass(index)">
-        <div class="progress-title">{{ stage.title }}</div>
-        <div class="progress-dot"></div>
-        <div class="progress-note">
-          <div>{{ stage.user }}</div>
-          <div>{{ stage.date }}</div>
-        </div>
-      </li>
-    </ul>
+    <!-- <header>客戶盡職審查系統</header> -->
 
-    <div id="problemCaseManager_UnsolvedForm">
+    <div class="sticky-header">
+      <ul class="progressbar-container">
+        <li v-for="(stage, index) in customerReviewStore.caseData.stages" :key="stage.title" :class="getStageClass(index)">
+          <div class="progress-title">{{ stage.title }}</div>
+          <div class="progress-dot"></div>
+          <div class="progress-note">
+            <div>{{ stage.user }}</div>
+            <div>{{ stage.date }}</div>
+          </div>
+        </li>
+      </ul>
       <div class="action-buttons">
         <button class="btn btn-danger mx-1" @click="returnToPrevious" :disabled="customerReviewStore.caseData.currentStageIndex === 0 || customerReviewStore.isLoading">退回</button>
         <button class="btn btn-secondary mx-1" @click="save" :disabled="customerReviewStore.isLoading">暫存</button>
         <button class="btn btn-success mx-1" @click="sendToNext" :disabled="isLastStep || customerReviewStore.isLoading">傳送</button>
       </div>
+    </div>
 
+    <div class="content-body">
       <div class="formContainer">
         <div class="formSectionTitle collapsible" @click="toggleCard('customerInfo')">
           <label>顧客資訊</label>
@@ -60,9 +62,7 @@
         </div>
         <transition name="collapse">
           <div v-show="expandedCards.has('managerReview')" class="form-content">
-            <div class="form-row single-row"><div class="form-title">審核結果：</div><div class="radio-group form-value"><label><input type="radio" value="Y" v-model="customerReviewStore.caseData.reviewResult"> 同意</label><label><input type="radio" value="N" v-model="customerReviewStore.caseData.reviewResult"> 不同意</label></div></div>
-            <div class="form-row single-row"><div class="form-title">簽核意見：</div><div class="form-value"><textarea v-model="customerReviewStore.caseData.managerMemo" placeholder="請在此輸入簽核意見..."></textarea></div></div>
-          </div>
+            </div>
         </transition>
       </div>
 
@@ -74,16 +74,13 @@
         <transition name="collapse">
           <div v-show="expandedCards.has('historyLog')">
             <table class="history-table">
-              <thead><tr><th>順序</th><th>處理人單位</th><th>處理人員</th><th>處理狀態</th><th>取件時間</th><th>完成時間</th><th>簽核意見</th></tr></thead>
-              <tbody><tr v-if="formattedHistory.length === 0"><td colspan="7" style="text-align: center;">沒有流程紀錄。</td></tr><tr v-for="item in formattedHistory" :key="item.sequence"><td>{{ item.sequence }}</td><td>{{ item.department || '-' }}</td><td>{{ item.user || '-' }}</td><td>{{ item.status || '-' }}</td><td>{{ item.startTime || '-' }}</td><td>{{ item.endTime || '-' }}</td><td>{{ item.memo || '-' }}</td></tr></tbody>
-            </table>
+              </table>
           </div>
         </transition>
       </div>
     </div>
 
     <MessageBox :show="showMessage" :message="message" @close="closeMessage" />
-
     <div v-if="customerReviewStore.isLoading" class="loading-overlay show">
       <div class="loading-spinner"></div>
       <div class="loading-text">正在處理中...</div>
@@ -148,6 +145,39 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* 【新增】黏性表頭的相關樣式 */
+.sticky-header {
+  /* 關鍵屬性，讓這個區塊黏在頂部 */
+  position: sticky;
+  top: 0;
+  
+  /* 確保它在最上層，不會被下方內容覆蓋 */
+  z-index: 10;
+  
+  /* 給一個背景色，這樣滾動時才不會變透明 */
+  background-color: #f8f9fa; /* 與頁面背景色相同 */
+  
+  /* 加一些內邊距和陰影，提升視覺效果 */
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin: 0 -1rem; /* 讓背景和陰影可以延伸到頁面邊緣 */
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* 確保進度條和按鈕區的樣式適合新的佈局 */
+.sticky-header .progressbar-container {
+  margin-bottom: 0.5rem;
+}
+.sticky-header .action-buttons {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+/* 讓下方的內容區塊與固定表頭之間有一點距離 */
+.content-body {
+  padding-top: 1rem;
+}
 .formSectionTitle.collapsible { cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
 .collapse-icon { width: 16px; height: 16px; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="%23555"><path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>'); background-size: contain; background-repeat: no-repeat; background-position: center; }
 .collapse-icon.expanded { transform: rotate(180deg); }
