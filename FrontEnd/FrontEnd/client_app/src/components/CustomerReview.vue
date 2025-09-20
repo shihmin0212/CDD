@@ -9,21 +9,7 @@
     </nav>
 
     <div class="sticky-header">
-      <ul class="progressbar-container">
-        
-        <li v-for="(stage, index) in customerReviewStore.caseData.stages" 
-            :key="stage.title" 
-            :class="getStageClass(index)">
-
-          <div class="progress-title">{{ stage.title }}</div>
-          <div class="progress-dot"></div>
-          <div class="progress-note">
-            <div>{{ stage.user }}</div>
-            <div>{{ stage.date }}</div>
-          </div>
-        </li>
-        
-      </ul>
+      <ProgressBar :stages="customerReviewStore.caseData.stages" :current-stage-index="customerReviewStore.caseData.currentStageIndex" />
       <div class="action-buttons">
         <button class="btn btn-danger mx-1" @click="returnToPrevious" :disabled="customerReviewStore.caseData.currentStageIndex === 0 || customerReviewStore.isLoading">退回</button>
         <button class="btn btn-secondary mx-1" @click="save" :disabled="customerReviewStore.isLoading">暫存</button>
@@ -32,56 +18,15 @@
     </div>
 
     <div class="content-body">
-      <div class="formContainer">
-        <div class="formSectionTitle collapsible" @click="toggleCard('customerInfo')">
-          <label>顧客資訊</label>
-          <span class="collapse-icon" :class="{ 'expanded': expandedCards.has('customerInfo') }"></span>
-        </div>
-        <transition name="collapse">
-          <div v-show="expandedCards.has('customerInfo')" class="form-content customer-info-grid">
-            <div class="form-row"><div class="form-title">顧客帳號</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.accountNumber }}</div><div class="form-title">身分證字號</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.idNumber }}</div></div>
-            <div class="form-row"><div class="form-title">顧客姓名</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.name }}</div><div class="form-title">國籍</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.nationality }}</div></div>
-            <div class="form-row"><div class="form-title">連絡電話</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.contactPhone }}</div><div class="form-title">行動電話</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.mobilePhone }}</div></div>
-            <div class="form-row"><div class="form-title">出生年月日</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.birthDate }}</div><div class="form-title">年齡</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.age }}</div></div>
-            <div class="form-row"><div class="form-title">身分類別</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.identityType }}</div><div class="form-title">職業類別</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.occupationCategory }}</div></div>
-            <div class="form-row"><div class="form-title">公司名稱</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.companyName }}</div><div class="form-title">公司電話</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.companyPhone }}</div></div>
-            <div class="form-row full-width"><div class="form-title">戶籍地址</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.householdAddress }}</div></div>
-            <div class="form-row full-width"><div class="form-title">公司地址</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.companyAddress }}</div></div>
-            <div class="form-row full-width"><div class="form-title">通訊地址</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.mailingAddress }}</div></div>
-            <div class="form-row"><div class="form-title">銀行帳號</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.bankAccount }}</div><div class="form-title">證券投資上限</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.investmentLimit }}</div></div>
-            <div class="form-row"><div class="form-title">緊急聯絡人</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.emergencyContact }}</div><div class="form-title">緊急連絡人電話</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.emergencyContactPhone }}</div></div>
-            <div class="form-row"><div class="form-title">買賣代理人</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.tradingAgent }}</div><div class="form-title">法定代理人</div><div class="form-value">{{ customerReviewStore.caseData.customerInfo.legalRepresentative }}</div></div>
-          </div>
-        </transition>
-      </div>
+      <CustomerInfo :customer-info="customerReviewStore.caseData.customerInfo" :is-expanded="expandedCards.has('customerInfo')" @toggle="toggleCard('customerInfo')" />
       
       <ReviewItemsForm :is-expanded="expandedCards.has('reviewItems')" @toggle="toggleCard('reviewItems')" />
 
       <FileUpload v-if="isSalespersonStage" :is-expanded="expandedCards.has('fileUpload')" @toggle="toggleCard('fileUpload')" />
 
-      <div class="formContainer" v-if="isManagerStage">
-        <div class="formSectionTitle collapsible" @click="toggleCard('managerReview')">
-          <label>單位主管(經理人)審核</label>
-          <span class="collapse-icon" :class="{ 'expanded': expandedCards.has('managerReview') }"></span>
-        </div>
-        <transition name="collapse">
-          <div v-show="expandedCards.has('managerReview')" class="form-content">
-            </div>
-        </transition>
-      </div>
+      <ManagerReview v-if="isManagerStage" :is-expanded="expandedCards.has('managerReview')" @toggle="toggleCard('managerReview')" />
 
-      <div class="formContainer">
-        <div class="formSectionTitle collapsible" @click="toggleCard('historyLog')">
-          <label>流程紀錄</label>
-          <span class="collapse-icon" :class="{ 'expanded': expandedCards.has('historyLog') }"></span>
-        </div>
-        <transition name="collapse">
-          <div v-show="expandedCards.has('historyLog')">
-            <table class="history-table">
-              </table>
-          </div>
-        </transition>
-      </div>
+      <HistoryLog :history="formattedHistory" :is-expanded="expandedCards.has('historyLog')" @toggle="toggleCard('historyLog')" />
     </div>
 
     <MessageBox :show="showMessage" :message="message" @close="closeMessage" />
@@ -98,6 +43,10 @@ import { useCustomerReviewStore } from '../stores/customerReview';
 import MessageBox from './MessageBox.vue';
 import ReviewItemsForm from './ReviewItemsForm.vue';
 import FileUpload from './FileUpload.vue';
+import ProgressBar from './ProgressBar.vue';
+import CustomerInfo from './CustomerInfo.vue';
+import ManagerReview from './ManagerReview.vue';
+import HistoryLog from './HistoryLog.vue';
 
 const customerReviewStore = useCustomerReviewStore();
 const message = ref('');
@@ -130,12 +79,6 @@ const formattedHistory = computed(() => {
   const fullHistory = currentStepRecord ? [...completedRecords, currentStepRecord] : [...completedRecords];
   return fullHistory.sort((a, b) => b.sequence - a.sequence);
 });
-
-const getStageClass = (index: number) => {
-  if (index < customerReviewStore.caseData.currentStageIndex) return 'done';
-  if (index === customerReviewStore.caseData.currentStageIndex) return 'now';
-  return 'next';
-};
 
 const showMessageBox = (msg: string) => { message.value = msg; showMessage.value = true; };
 const closeMessage = () => { showMessage.value = false; };
@@ -182,22 +125,6 @@ onMounted(() => {
 .content-body {
   padding-top: 1rem;
 }
-.formSectionTitle.collapsible { cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
-.collapse-icon { width: 16px; height: 16px; transition: transform 0.3s ease; background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="%23555"><path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg>'); background-size: contain; background-repeat: no-repeat; background-position: center; }
-.collapse-icon.expanded { transform: rotate(180deg); }
-.collapse-enter-active, .collapse-leave-active { transition: all 0.3s ease-in-out; overflow: hidden; }
-.collapse-enter-from, .collapse-leave-to { max-height: 0; opacity: 0; margin-top: -1rem; padding-top: 0; padding-bottom: 0; }
-.collapse-enter-to, .collapse-leave-from { max-height: 1500px; opacity: 1; }
-.form-content { padding: 10px; margin-top: 1rem; }
-.customer-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
-.form-row { display: grid; grid-template-columns: 120px 1fr; align-items: center; border-bottom: 1px solid #f0f0f0; padding: 8px 0; }
-.form-row.full-width { grid-column: 1 / -1; }
-.form-title { font-weight: bold; color: #555; text-align: right; padding-right: 15px; }
-.form-value { text-align: left; }
-.form-row.single-row { grid-template-columns: 120px 1fr; }
-.radio-group label { margin-right: 15px; }
-textarea { width: 100%; min-height: 80px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
-.history-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-.history-table th, .history-table td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; vertical-align: middle; font-size: 14px; }
-.history-table th { background-color: #f2f2f2; font-weight: bold; }
+
+/* 以下樣式已移至各子元件，故可移除 */
 </style>
