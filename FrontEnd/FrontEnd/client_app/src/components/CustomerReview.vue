@@ -1,17 +1,20 @@
 <template>
-  <div id="pageContentContainer">
-    <div class="breadcrumbContainer">
-      <ul>
-        <li>首頁</li>
-        <li>客戶盡職審查</li>
-        <li class="now">顧客盡職審查</li>
-      </ul>
-    </div>
-    <!-- <header>客戶盡職審查系統</header> -->
+  <div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">首頁</a></li>
+        <li class="breadcrumb-item"><a href="#">客戶盡職審查</a></li>
+        <li class="breadcrumb-item active" aria-current="page">新增審查表單</li>
+      </ol>
+    </nav>
 
     <div class="sticky-header">
       <ul class="progressbar-container">
-        <li v-for="(stage, index) in customerReviewStore.caseData.stages" :key="stage.title" :class="getStageClass(index)">
+        
+        <li v-for="(stage, index) in customerReviewStore.caseData.stages" 
+            :key="stage.title" 
+            :class="getStageClass(index)">
+
           <div class="progress-title">{{ stage.title }}</div>
           <div class="progress-dot"></div>
           <div class="progress-note">
@@ -19,6 +22,7 @@
             <div>{{ stage.date }}</div>
           </div>
         </li>
+        
       </ul>
       <div class="action-buttons">
         <button class="btn btn-danger mx-1" @click="returnToPrevious" :disabled="customerReviewStore.caseData.currentStageIndex === 0 || customerReviewStore.isLoading">退回</button>

@@ -155,20 +155,19 @@ const navigateTo = (path: string) => {
 
 /* 主內容區域 */
 .main-content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  background-color: #ffffff;
-  transition: width 0.3s ease-in-out;
+ flex-grow: 1;
+ display: flex;
+ flex-direction: column;
+ transition: width 0.3s ease-in-out;
 }
 
 .main-header {
-  display: flex;
-  align-items: center;
-  padding: 0 1.5rem;
-  height: 64px; /* 與側邊欄 header 對齊 */
-  flex-shrink: 0;
+ display: flex;
+ align-items: center;
+ padding: 0 1.5rem;
+ height: 64px;
+ flex-shrink: 0;
+ border-bottom: 1px solid #e0e0e0; /* 建議加上分隔線 */
 }
 
 .btn-icon {
@@ -189,7 +188,10 @@ const navigateTo = (path: string) => {
 }
 
 .page-content {
-  padding: 0 2rem 2rem 2rem; /* 主內容的內邊距 */
-  flex-grow: 1;
+ /* 原本是 padding: 0 2rem 2rem 2rem; */
+ padding: 2rem; /* 上下左右都有 2rem 的內距，更具一致性 */
+ flex-grow: 1;
+ height: 100%; /* 確保在內容少時也能撐開 */
+ overflow-y: auto; /* 內容過多時可滾動 */
 }
 </style>

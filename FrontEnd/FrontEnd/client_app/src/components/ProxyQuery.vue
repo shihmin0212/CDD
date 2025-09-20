@@ -1,5 +1,5 @@
 <template>
-  <div class="container my-4">
+  <div>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">首頁</a></li>
