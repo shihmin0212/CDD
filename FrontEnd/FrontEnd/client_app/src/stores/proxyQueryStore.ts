@@ -1,16 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-
-// 定義資料介面
-export interface ProxyItem {
-  branch: string;
-  employeeId: string;
-  name: string;
-  agentId: string | null;
-  applicationDate: string | null;
-  lastModifiedUser: string | null;
-  lastModifiedTime: string | null;
-}
+// ✨ 從 types.ts 匯入類型定義
+import { type ProxyItem, type AgentOption } from './types';
 
 export const useProxyQueryStore = defineStore('proxyQuery', () => {
   // --- STATE ---
@@ -26,7 +17,7 @@ export const useProxyQueryStore = defineStore('proxyQuery', () => {
 
   const branchOptions = ref(['', '經紀本部', '雙和分公司', '士林分公司', '信義分公司', '左營分公司', '數位分公司']);
   const personnelOptions = ref(['', '陳靜香', '林大熊', '王小明', '張大華', '林OO', '張OO', '李OO', '王OO', '陳OO', '趙OO', '錢OO', '孫OO']);
-  const agentOptions = ref([
+  const agentOptions = ref<AgentOption[]>([
     { id: '71235', name: '王OO' },
     { id: '71239', name: '陳OO' },
     { id: '71103', name: '李OO' },
