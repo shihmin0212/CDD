@@ -4,17 +4,6 @@ using CDD.API.Services.Interfaces;
 
 namespace CDD.Api.Services
 {
-    public class FlowStageConfig
-    {
-        /// <summary>
-        /// 純網域根，例如：https://FlowStageAPISIT.testesunsec.com.tw
-        /// </summary>
-        public string BaseUrl { get; set; } = null!;
-
-        /// <summary>預留（目前不用）</summary>
-        public string Token { get; set; } = null!;
-    }
-
     public class FlowStageService : IFlowStageService
     {
         private readonly ILogger<FlowStageService> _logger;
@@ -115,3 +104,11 @@ namespace CDD.Api.Services
         }
     }
 }
+
+#region DTO
+public class FlowStageConfig
+{
+    public string BaseUrl { get; set; }
+}
+
+#endregion
