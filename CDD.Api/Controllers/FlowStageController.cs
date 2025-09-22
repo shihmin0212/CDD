@@ -137,5 +137,36 @@ namespace CDD.Api.Controllers
         }
         #endregion
 
+        #region OA取得前一關卡資訊 (退回用)
+        /// <summary>
+        /// 取得退回關卡資訊
+        /// </summary>
+        /// <param name="employeeID">員工編號</param>
+        [HttpGet("GetBackApprover")]
+        public async Task<GeneralResp<GetBackApproverResp>> GetBackApprover([FromQuery] string signId)
+        {
+            var result = await _flowStageService.GetBackApproverAsync(signId, "1");
+
+            if (result == null)
+            {
+                return new GeneralResp<GetBackApproverResp>()
+                {
+                    Status = false,
+                    Message = "查無資料",
+                    Result = null
+                };
+            }
+
+            // 保持完整外部內容，不加工 IsSuccess/ValidationMsg
+            return new GeneralResp<GetBackApproverResp>()
+            {
+                Status = true,
+                Message = "成功",
+                Result = result
+            };
+        }
+        #endregion
+
+
     }
 }

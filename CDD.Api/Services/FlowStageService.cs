@@ -94,5 +94,24 @@ namespace CDD.Api.Services
                 throw;
             }
         }
+
+        /// <summary>
+        /// FSA-004: 取得退回關卡資訊
+        /// GET /FlowStageVer2/GetBackApprover/{signId}/{stageDesignate}
+        /// </summary>
+        public async Task<GetBackApproverResp> GetBackApproverAsync(string signId, string stageDesignate)
+        {
+            string url = $"{_baseUrl}/FlowStageVer2/GetBackApprover?signId={signId}&stageDesignate={stageDesignate}";
+            try
+            {
+                GetBackApproverResp resp = await _request.GetJSON<GetBackApproverResp>(url, headers: null);
+                return resp;
+            }
+            catch (HttpRequestException ex)
+            {
+                _logger.LogError(ex, "FlowStage GetProcessStatus 呼叫失敗, signId={SignId}", signId);
+                throw;
+            }
+        }
     }
 }
