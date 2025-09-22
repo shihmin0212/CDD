@@ -2,7 +2,8 @@
 using CDD.Api.Helpers;
 using CDD.Api.Libs;
 using CDD.Api.Models.Response;
-using CDD.Api.Services;
+using CDD.API.Models.Response;
+using CDD.API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CDD.Api.Controllers
@@ -46,20 +47,20 @@ namespace CDD.Api.Controllers
             _WebSetting = (ConfigurationSection)config.GetSection("WebSetting") ?? throw new ArgumentNullException("appsetting::WebSetting");
         }
 
-        #region GetFlowStatus
+        #region 表單取得狀態GetFlowStatus
         /// <summary>
-        /// 查詢簽核流程狀態
+        /// 表單取得狀態GetFlowStatus
         /// </summary>
         /// <param name="signId">簽核單號</param>
         /// <returns></returns>
         [HttpGet("GetFlowStatus")]
-        public async Task<GeneralResp<FlowStageResult?>> GetFlowStatus([FromQuery] string signId)
+        public async Task<GeneralResp<GetFlowStatusResp>> GetFlowStatus([FromQuery] string signId)
         {
             var result = await _flowStageService.GetFlowStatusAsync(signId);
 
             if (result == null)
             {
-                return new GeneralResp<FlowStageResult?>()
+                return new GeneralResp<GetFlowStatusResp>()
                 {
                     Status = false,
                     Message = "查無流程資料",
@@ -67,7 +68,7 @@ namespace CDD.Api.Controllers
                 };
             }
 
-            return new GeneralResp<FlowStageResult?>()
+            return new GeneralResp<GetFlowStatusResp>()
             {
                 Status = true,
                 Message = "成功",
@@ -76,9 +77,9 @@ namespace CDD.Api.Controllers
         }
         #endregion
 
-        #region GetProcessStatus
+        #region 表單取得關卡簽核資訊 GetProcessStatus (上面流程使用)
         /// <summary>
-        /// 取得流程節點狀態（外部服務完整回傳）
+        /// 表單取得關卡簽核資訊 GetProcessStatus (上面流程使用)
         /// </summary>
         /// <param name="signId">簽核單號</param>
         [HttpGet("GetProcessStatus/{signId}")]
@@ -97,7 +98,7 @@ namespace CDD.Api.Controllers
             }
 
             // 你希望「完整回傳訊息」，這裡不再加工 IsSuccess / ValidationMsg
-            return new GeneralResp<ProcessStatusResult?>()
+            return new GeneralResp<ProcessStatusResult>()
             {
                 Status = true,
                 Message = "成功",
@@ -106,19 +107,19 @@ namespace CDD.Api.Controllers
         }
         #endregion
 
-        #region FSA-011 GetMemberInfo
+        #region 取得HR人員資訊 (GetMemberInfo)
         /// <summary>
-        /// 取得員工資訊（每次一筆）
+        /// 取得HR人員資訊 (GetMemberInfo)
         /// </summary>
         /// <param name="employeeID">員工編號</param>
         [HttpGet("GetMemberInfo/{employeeID}")]
-        public async Task<GeneralResp<GetMemberInfoResp?>> GetMemberInfo([FromRoute] string employeeID)
+        public async Task<GeneralResp<GetMemberInfoResp>> GetMemberInfo([FromRoute] string employeeID)
         {
             var result = await _flowStageService.GetMemberInfoAsync(employeeID);
 
             if (result == null)
             {
-                return new GeneralResp<GetMemberInfoResp?>()
+                return new GeneralResp<GetMemberInfoResp>()
                 {
                     Status = false,
                     Message = "查無資料",
@@ -127,7 +128,7 @@ namespace CDD.Api.Controllers
             }
 
             // 保持完整外部內容，不加工 IsSuccess/ValidationMsg
-            return new GeneralResp<GetMemberInfoResp?>()
+            return new GeneralResp<GetMemberInfoResp>()
             {
                 Status = true,
                 Message = "成功",

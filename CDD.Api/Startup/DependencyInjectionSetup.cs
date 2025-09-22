@@ -18,6 +18,7 @@ using CDD.Api.Libs;
 using CDD.Api.Models.DTO;
 using CDD.Api.Repositories;
 using CDD.Api.Services;
+using CDD.API.Services.Interfaces;
 
 namespace CDD.Api.Startup
 {
