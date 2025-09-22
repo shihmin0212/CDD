@@ -278,7 +278,7 @@ namespace CDD.Api.Startup
             // TODO：再確認參考其他專案的 IRequest 實作
             services.AddScoped<IRequest, Request>();
 
-            services.AddScoped<FlowStage_Service>();
+            services.AddScoped<IFlowStageService, FlowStageService>();
             services.AddMemoryCache();
             services.AddSingleton<IMemoryCacheHelper, MemoryCacheHelper>();
 

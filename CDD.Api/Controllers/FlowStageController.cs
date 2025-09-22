@@ -21,7 +21,7 @@ namespace CDD.Api.Controllers
         private readonly APIHelper _apiHelper;
         private readonly IRequest _request;
         private readonly IMemoryCacheHelper _memoryCacheHelper;
-        private readonly FlowStage_Service _flowStageService;
+        private readonly IFlowStageService _flowStageService;
         private readonly ConfigurationSection _WebSetting;
 
         public FlowStageController(
@@ -32,7 +32,7 @@ namespace CDD.Api.Controllers
             IIPHelper ipHelper,
             IRequest request,
             IMemoryCacheHelper memoryCacheHelper,
-            FlowStage_Service flowStageService)
+            IFlowStageService flowStageService)
         {
             _env = env ?? throw new ArgumentNullException(nameof(env));
             _config = config ?? throw new ArgumentNullException(nameof(config));
@@ -76,7 +76,6 @@ namespace CDD.Api.Controllers
         }
         #endregion
 
-
         #region GetProcessStatus
         /// <summary>
         /// 取得流程節點狀態（外部服務完整回傳）
@@ -107,6 +106,35 @@ namespace CDD.Api.Controllers
         }
         #endregion
 
+        #region FSA-011 GetMemberInfo
+        /// <summary>
+        /// 取得員工資訊（每次一筆）
+        /// </summary>
+        /// <param name="employeeID">員工編號</param>
+        [HttpGet("GetMemberInfo/{employeeID}")]
+        public async Task<GeneralResp<GetMemberInfoResp?>> GetMemberInfo([FromRoute] string employeeID)
+        {
+            var result = await _flowStageService.GetMemberInfoAsync(employeeID);
+
+            if (result == null)
+            {
+                return new GeneralResp<GetMemberInfoResp?>()
+                {
+                    Status = false,
+                    Message = "查無資料",
+                    Result = null
+                };
+            }
+
+            // 保持完整外部內容，不加工 IsSuccess/ValidationMsg
+            return new GeneralResp<GetMemberInfoResp?>()
+            {
+                Status = true,
+                Message = "成功",
+                Result = result
+            };
+        }
+        #endregion
 
     }
 }
