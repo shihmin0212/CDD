@@ -266,7 +266,6 @@ namespace CDD.Api.Libs
             return await GetJSON<T>(url, headers, new string[] { }, new string[] { });
         }
 
-
         public async Task<HttpStatusCode> Post(string url, string postBody, Dictionary<string, string>? headers, string[] noLogReqPatterns)
         {
             #region Log Request

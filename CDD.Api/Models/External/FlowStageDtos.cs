@@ -51,8 +51,8 @@ namespace CDD.Api.Models.External
         [JsonProperty("StageAction")]
         public List<int> StageAction { get; set; } = new();
 
-        [JsonProperty("AuthAddCSUnit")]
-        public bool AuthAddCSUnit { get; set; }
+        [JsonProperty("AuthAdCDDUnit")]
+        public bool AuthAdCDDUnit { get; set; }
 
         // 外部實際欄位名稱（少一個 'u'）
         [JsonProperty("ConterSignedExit")]

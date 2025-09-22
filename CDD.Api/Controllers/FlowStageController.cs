@@ -1,57 +1,112 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using CDD.Api.Attributes;
+﻿using CDD.Api.Attributes;
+using CDD.Api.Helpers;
+using CDD.Api.Libs;
 using CDD.Api.Models.Response;
 using CDD.Api.Services;
-using CDD.Api.Models.External;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CDD.Api.Controllers
 {
-    /// <summary>FlowStage 代理查詢 API</summary>
-    [Route("api/FlowStage")]
+    [Route("api/[controller]")]
     [ApiController]
-    [LogOptions]
+    [LogOptions()]
     [ApiKeyAuthentication]
     [AdminTokenAuth]
-    public class FlowStageController(IExternalFlowApiClient client, ILogger<FlowStageController> logger) : ControllerBase
+    public class FlowStageController : ControllerBase
     {
-        private readonly IExternalFlowApiClient _client = client ?? throw new ArgumentNullException(nameof(client));
-        private readonly ILogger<FlowStageController> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        private readonly IWebHostEnvironment _env;
+        private readonly IConfiguration _config;
+        private readonly ILogger _logger;
+        private readonly IIPHelper _ipHelper;
+        private readonly APIHelper _apiHelper;
+        private readonly IRequest _request;
+        private readonly IMemoryCacheHelper _memoryCacheHelper;
+        private readonly FlowStage_Service _flowStageService;
+        private readonly ConfigurationSection _WebSetting;
 
-        /// <summary>FSA-002：GetFlowStatus</summary>
-        /// <param name="signId">表單編號</param>
-        [HttpGet("GetFlowStatus")]
-        [Produces("application/json")]
-        public async Task<GeneralResp<FlowStatusRoot>> GetFlowStatus([FromQuery] string signId)
+        public FlowStageController(
+            IWebHostEnvironment env,
+            IConfiguration config,
+            ILogger<FlowStageController> logger,
+            APIHelper apiHelper,
+            IIPHelper ipHelper,
+            IRequest request,
+            IMemoryCacheHelper memoryCacheHelper,
+            FlowStage_Service flowStageService)
         {
-            var resp = new GeneralResp<FlowStatusRoot>();
+            _env = env ?? throw new ArgumentNullException(nameof(env));
+            _config = config ?? throw new ArgumentNullException(nameof(config));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _apiHelper = apiHelper ?? throw new ArgumentNullException(nameof(apiHelper));
+            _ipHelper = ipHelper ?? throw new ArgumentNullException(nameof(ipHelper));
+            _request = request ?? throw new ArgumentNullException(nameof(request));
+            _memoryCacheHelper = memoryCacheHelper ?? throw new ArgumentNullException(nameof(memoryCacheHelper));
+            _flowStageService = flowStageService ?? throw new ArgumentNullException(nameof(flowStageService));
 
-            try
-            {
-                var data = await _client.GetFlowStatusAsync(signId);
+            _WebSetting = (ConfigurationSection)config.GetSection("WebSetting") ?? throw new ArgumentNullException("appsetting::WebSetting");
+        }
 
-                resp.Status = data.IsSuccess;
-                resp.Code = data.IsSuccess ? 0 : 1; // 0:成功, 1:查無資料或外部回傳失敗
-                resp.Message = (!data.IsSuccess && (data.ValidationMsg?.Count ?? 0) > 0)
-                               ? string.Join("; ", data.ValidationMsg)
-                               : string.Empty;
-                resp.Result = data;
-            }
-            catch (Exception ex)
+        #region GetFlowStatus
+        /// <summary>
+        /// 查詢簽核流程狀態
+        /// </summary>
+        /// <param name="signId">簽核單號</param>
+        /// <returns></returns>
+        [HttpGet("GetFlowStatus")]
+        public async Task<GeneralResp<FlowStageResult?>> GetFlowStatus([FromQuery] string signId)
+        {
+            var result = await _flowStageService.GetFlowStatusAsync(signId);
+
+            if (result == null)
             {
-                _logger.LogError(ex, "GetFlowStatus exception. signId={signId}", signId);
-                resp.Status = false;
-                resp.Code = -1;                  // 系統/權限等錯誤
-                resp.Exception = ex.ToString();
-                resp.Message = ex.Message;
-                resp.Result = new FlowStatusRoot
+                return new GeneralResp<FlowStageResult?>()
                 {
-                    IsSuccess = false,
-                    FlowStatus = new FlowStatusData(),
-                    ValidationMsg = new List<string> { ex.Message }
+                    Status = false,
+                    Message = "查無流程資料",
+                    Result = null
                 };
             }
 
-            return resp;
+            return new GeneralResp<FlowStageResult?>()
+            {
+                Status = true,
+                Message = "成功",
+                Result = result
+            };
         }
+        #endregion
+
+
+        #region GetProcessStatus
+        /// <summary>
+        /// 取得流程節點狀態（外部服務完整回傳）
+        /// </summary>
+        /// <param name="signId">簽核單號</param>
+        [HttpGet("GetProcessStatus/{signId}")]
+        public async Task<GeneralResp<ProcessStatusResult?>> GetProcessStatus([FromRoute] string signId)
+        {
+            var result = await _flowStageService.GetProcessStatusAsync(signId);
+
+            if (result == null)
+            {
+                return new GeneralResp<ProcessStatusResult?>()
+                {
+                    Status = false,
+                    Message = "查無流程資料",
+                    Result = null
+                };
+            }
+
+            // 你希望「完整回傳訊息」，這裡不再加工 IsSuccess / ValidationMsg
+            return new GeneralResp<ProcessStatusResult?>()
+            {
+                Status = true,
+                Message = "成功",
+                Result = result
+            };
+        }
+        #endregion
+
+
     }
 }
