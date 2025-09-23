@@ -277,11 +277,12 @@
 </template>
 
 <script setup lang="ts">
-// Script 區塊完全不需要變更
-import { ref, reactive, computed } from 'vue';
+import { ref, reactive, computed, toRaw } from 'vue'; // 引入 toRaw
 import { useCaseManagementStore } from '../stores/caseManagement';
 
 const caseStore = useCaseManagementStore();
+
+// --- Modal 相關的狀態管理 (維持不變) ---
 const isModalVisible = ref(false);
 const manualCase = reactive({
   branch: '經紀本部',
@@ -293,6 +294,7 @@ const manualCase = reactive({
 const isQuerying = ref(false);
 const queryCompleted = ref(false);
 const queryResultText = ref('');
+
 const resetModalState = () => {
     manualCase.branch = '經紀本部';
     manualCase.accountNumber = '9805892';
@@ -303,10 +305,12 @@ const resetModalState = () => {
     queryCompleted.value = false;
     queryResultText.value = '';
 };
+
 const openManualCaseModal = () => {
   resetModalState();
   isModalVisible.value = true;
 };
+
 const performModalQuery = async () => {
   if (!manualCase.accountNumber) {
     queryResultText.value = '請先輸入帳號';
@@ -322,23 +326,41 @@ const performModalQuery = async () => {
     queryResultText.value = '查詢結果: A123***789  林O名';
   }, 1000);
 };
+
+// --- 【修改】建立案件的函式 ---
 const createCase = async () => {
-  // 呼叫 Store 中的 createCase action，並等待它完成
-  await caseStore.createCase(manualCase);
+  // 1. 在前端產生 FormId
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-11
+  const dd = String(today.getDate()).padStart(2, '0');
+  const dateString = `${yyyy}${mm}${dd}`;
+  const sequence = '0001'; // 暫時寫死流水號
+  const newFormId = `DD${dateString}${sequence}`;
 
-  // 從 Store 取得提交結果
+  // 2. 將 FormId 和表單資料組合起來
+  const dataToSend = {
+    ...toRaw(manualCase), // 使用 toRaw 取得純 JS 物件
+    formId: newFormId
+  };
+
+  // 3. 呼叫 Store 中的 createCase action
+  await caseStore.createCase(dataToSend);
+
+  // 4. 處理來自後端的簡單回應
   const result = caseStore.submissionResult;
-
   if (result && result.success) {
-    // 如果成功，顯示成功訊息並關閉 Modal
-    alert(result.message); // 您可以換成更好看的提示框
+    // 顯示成功訊息，並附上我們剛剛產生的 ID
+    alert(`案件 ${newFormId} 建立請求成功！\n後端回應: ${result.message}`);
     isModalVisible.value = false;
+    performSearch(); // 刷新列表
   } else if (result) {
-    // 如果失敗，在 Modal 內顯示錯誤訊息，不關閉 Modal
-    // 這樣使用者可以根據錯誤訊息修正內容
     queryResultText.value = `建立失敗: ${result.message}`;
   }
 };
+
+
+// --- 以下是您原有的 Script 邏輯，維持不變 ---
 const selectAll = computed({
   get: () => {
     const selectableItems = caseStore.caseList.filter(item => item.selectable);
@@ -350,6 +372,7 @@ const selectAll = computed({
     });
   }
 });
+
 const performSearch = () => {
   caseStore.searchCases();
 }

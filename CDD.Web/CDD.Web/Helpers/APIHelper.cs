@@ -309,6 +309,12 @@ namespace CDD.Web.Helpers
 public class CreateFormReq
 {
     /// <summary>
+    /// 表單ID (由前端產生)
+    /// </summary>
+    [JsonPropertyName("formId")]
+    public string FormId { get; set; }
+
+    /// <summary>
     /// 分公司
     /// </summary>
     [JsonPropertyName("branch")]

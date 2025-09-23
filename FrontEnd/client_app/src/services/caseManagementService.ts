@@ -7,6 +7,7 @@ import type { CaseItem, SearchFilters } from '@/stores/caseManagement';
 
 // [新增] 定義人工起單表單的資料介面
 export interface ManualCaseData {
+  formId: string; // 新增 formId
   branch: string;
   accountNumber: string;
   businessType: string;
