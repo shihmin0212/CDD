@@ -263,7 +263,10 @@
                          <span v-if="isQuerying" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
                         {{ isQuerying ? '查詢中...' : '查詢' }}
                     </button>
-                    <button type="button" class="btn btn-primary" @click="createCase" :disabled="!queryCompleted">建立</button>
+                    <button type="button" class="btn btn-primary" @click="createCase" :disabled="!queryCompleted || caseStore.isSubmitting">
+                      <span v-if="caseStore.isSubmitting" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+                      {{ caseStore.isSubmitting ? '建立中...' : '建立' }}
+                    </button>
                 </div>
             </div>
           </div>
@@ -319,11 +322,22 @@ const performModalQuery = async () => {
     queryResultText.value = '查詢結果: A123***789  林O名';
   }, 1000);
 };
-const createCase = () => {
-  console.log('建立案件資料:', { ...manualCase });
-  alert(`案件已建立！\n分公司: ${manualCase.branch}\n帳號: ${manualCase.accountNumber}`);
-  isModalVisible.value = false;
-  performSearch();
+const createCase = async () => {
+  // 呼叫 Store 中的 createCase action，並等待它完成
+  await caseStore.createCase(manualCase);
+
+  // 從 Store 取得提交結果
+  const result = caseStore.submissionResult;
+
+  if (result && result.success) {
+    // 如果成功，顯示成功訊息並關閉 Modal
+    alert(result.message); // 您可以換成更好看的提示框
+    isModalVisible.value = false;
+  } else if (result) {
+    // 如果失敗，在 Modal 內顯示錯誤訊息，不關閉 Modal
+    // 這樣使用者可以根據錯誤訊息修正內容
+    queryResultText.value = `建立失敗: ${result.message}`;
+  }
 };
 const selectAll = computed({
   get: () => {

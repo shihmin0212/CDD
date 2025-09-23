@@ -2,40 +2,62 @@
 
 import { defineStore } from 'pinia';
 import { ref, reactive, toRaw } from 'vue';
-// 【修改後】從我們新建的 Service 引入
-import { caseManagementService } from '@/services/caseManagementService';
+// [修改] 引入 caseManagementService 和新的 ManualCaseData 介面
+import { caseManagementService, type ManualCaseData } from '@/services/caseManagementService';
 
-// 將介面定義放在這裡，或是一個共用的 types 檔案
-export interface CaseItem { id: string; formId: string; branch: string; customerAccount: string; idNumber: string; customerName: string; salesperson: string; reviewStatus: string; source: string; enhancedReview: '是' | '否' | ''; applicationDate: string; lastModifiedTime: string; currentProcessor: string; amlStatus: 'queried' | 'pending'; b27Status: 'queried' | 'pending'; detailsLink: string | null; selectable: boolean; selected?: boolean; }
-export interface SearchFilters { branch: string; specialist: string; source: string; accountNumber: string; idNumber: string; dateFrom: string; dateTo: string; reviewStatus: string; processor: string; enhancedReview: 'all' | 'yes' | 'no'; formId: string; }
+// 介面定義
+export interface CaseItem { id: string; /* ...其他欄位... */ }
+export interface SearchFilters { /* ...篩選欄位... */ }
+// [新增] 提交結果的介面
+export interface SubmissionResult {
+  success: boolean;
+  message: string;
+}
 
 export const useCaseManagementStore = defineStore('caseManagement', () => {
-  const filters = reactive<SearchFilters>({
-    branch: '全部', specialist: '全部', source: '全部', accountNumber: '', idNumber: '', dateFrom: '', dateTo: '', reviewStatus: '全部', processor: '全部', enhancedReview: 'all', formId: ''
-  });
-  
+  const filters = reactive<SearchFilters>({ /* ... */ });
   const caseList = ref<CaseItem[]>([]);
   const isLoading = ref(false);
   const searchSummary = ref('');
+
+  // [新增] 用於追蹤 "建立" 按鈕的狀態
+  const isSubmitting = ref(false);
+  const submissionResult = ref<SubmissionResult | null>(null);
 
   const searchCases = async () => {
     isLoading.value = true;
     caseList.value = [];
     searchSummary.value = '';
-    
     try {
-      // 【修改後】呼叫 Service 層的方法，邏輯變得非常乾淨
       const results = await caseManagementService.searchCases(toRaw(filters));
-      
       caseList.value = results;
       searchSummary.value = `查詢結果共 ${results.length} 筆`;
-
     } catch (error: any) {
-      // 錯誤已在 ApiClient 被 console.error 記錄
-      // Store 只需要更新 UI 狀態來提示使用者
       searchSummary.value = error.message || '查詢時發生未知錯誤';
     } finally {
       isLoading.value = false;
+    }
+  };
+
+  // [新增] 建立案件的 Action
+  const createCase = async (caseData: ManualCaseData) => {
+    isSubmitting.value = true;
+    submissionResult.value = null; // 重置結果
+    try {
+      // 呼叫 Service 層的方法
+      const successMessage = await caseManagementService.createCase(caseData);
+      
+      // 更新成功結果
+      submissionResult.value = { success: true, message: successMessage };
+
+      // [重要] 建立成功後，自動重新查詢列表
+      await searchCases(); 
+      
+    } catch (error: any) {
+      // 更新失敗結果
+      submissionResult.value = { success: false, message: error.message || '建立案件時發生未知錯誤' };
+    } finally {
+      isSubmitting.value = false;
     }
   };
 
@@ -45,5 +67,9 @@ export const useCaseManagementStore = defineStore('caseManagement', () => {
     isLoading,
     searchSummary,
     searchCases,
+    // [新增] 匯出新的狀態和方法
+    isSubmitting,
+    submissionResult,
+    createCase,
   };
 });

@@ -1,11 +1,12 @@
-﻿using Newtonsoft.Json;
-using CDD.Web.Libs;
+﻿using CDD.Web.Libs;
 using CDD.Web.Models.APIResponse;
 using CDD.Web.Models.DTO;
 using CDD.Web.Models.Request;
 using CDD.Web.Models.Response;
 using CDD.Web.Models.Response.System;
 using CDD.Web.Serives;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace CDD.Web.Helpers
 {
@@ -307,7 +308,35 @@ namespace CDD.Web.Helpers
 
 public class CreateFormReq
 {
-    public string FormId { get; set; }
+    /// <summary>
+    /// 分公司
+    /// </summary>
+    [JsonPropertyName("branch")]
+    public string Branch { get; set; }
+
+    /// <summary>
+    /// 帳號
+    /// </summary>
+    [JsonPropertyName("accountNumber")]
+    public string AccountNumber { get; set; }
+
+    /// <summary>
+    /// 業務類別
+    /// </summary>
+    [JsonPropertyName("businessType")]
+    public string BusinessType { get; set; }
+
+    /// <summary>
+    /// 審查原因
+    /// </summary>
+    [JsonPropertyName("reviewReason")]
+    public string ReviewReason { get; set; }
+
+    /// <summary>
+    /// 其它原因 (此欄位可能為空)
+    /// </summary>
+    [JsonPropertyName("otherReason")]
+    public string? OtherReason { get; set; } // 使用 string? 表示此欄位可為 null
 }
 
 public class ApiCreateFormResp
