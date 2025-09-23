@@ -74,7 +74,7 @@ public class FlowStatus
     public List<object> HistoryFlow { get; set; }
     public string JBPMUID { get; set; }
     public string SignID { get; set; }
-    public string StageAction { get; set; }
+    public List<int> StageAction { get; set; }
     public int Status { get; set; }
 }
 public class UpdateFlowResp

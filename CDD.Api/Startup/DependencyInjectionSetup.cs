@@ -19,6 +19,7 @@ using CDD.Api.Models.DTO;
 using CDD.Api.Repositories;
 using CDD.Api.Services;
 using CDD.API.Services.Interfaces;
+using SurveryProject.Service.Base;
 
 namespace CDD.Api.Startup
 {
@@ -281,9 +282,11 @@ namespace CDD.Api.Startup
 
             services.AddScoped<IFlowStageService, FlowStageService>();
             services.AddScoped<FlowService>();
+            services.AddScoped<AOAFlowStageService>();
             services.AddMemoryCache();
             services.AddSingleton<IMemoryCacheHelper, MemoryCacheHelper>();
-
+            services.AddSingleton<DataConfig>();
+            services.AddSingleton<HTTPRequests>();
             #endregion
 
             return services;

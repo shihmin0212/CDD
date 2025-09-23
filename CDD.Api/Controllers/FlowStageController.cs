@@ -2,6 +2,7 @@
 using CDD.Api.Helpers;
 using CDD.Api.Libs;
 using CDD.Api.Models.Response;
+using CDD.Api.Services;
 using CDD.API.Models.Response;
 using CDD.API.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,7 @@ namespace CDD.Api.Controllers
         private readonly IMemoryCacheHelper _memoryCacheHelper;
         private readonly IFlowStageService _flowStageService;
         private readonly ConfigurationSection _WebSetting;
+        private readonly AOAFlowStageService _aoaflowStageService;
 
         public FlowStageController(
             IWebHostEnvironment env,
@@ -33,7 +35,8 @@ namespace CDD.Api.Controllers
             IIPHelper ipHelper,
             IRequest request,
             IMemoryCacheHelper memoryCacheHelper,
-            IFlowStageService flowStageService)
+            IFlowStageService flowStageService,
+            AOAFlowStageService aoaflowStageService)
         {
             _env = env ?? throw new ArgumentNullException(nameof(env));
             _config = config ?? throw new ArgumentNullException(nameof(config));
@@ -43,6 +46,7 @@ namespace CDD.Api.Controllers
             _request = request ?? throw new ArgumentNullException(nameof(request));
             _memoryCacheHelper = memoryCacheHelper ?? throw new ArgumentNullException(nameof(memoryCacheHelper));
             _flowStageService = flowStageService ?? throw new ArgumentNullException(nameof(flowStageService));
+            _aoaflowStageService = aoaflowStageService ?? throw new ArgumentNullException(nameof(aoaflowStageService));
 
             _WebSetting = (ConfigurationSection)config.GetSection("WebSetting") ?? throw new ArgumentNullException("appsetting::WebSetting");
         }
@@ -54,7 +58,7 @@ namespace CDD.Api.Controllers
         /// <param name="signId">簽核單號</param>
         /// <returns></returns>
         [HttpGet("GetFlowStatus")]
-        public async Task<GeneralResp<GetFlowStatusResp>> GetFlowStatus([FromQuery] string signId)
+        public async Task<GeneralResp<GetFlowStatusResp>> GetFlowStatusAsync([FromQuery] string signId)
         {
             var result = await _flowStageService.GetFlowStatusAsync(signId);
 
