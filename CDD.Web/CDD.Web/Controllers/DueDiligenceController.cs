@@ -1,6 +1,7 @@
 ﻿using CDD.Web.Helpers;
 using CDD.Web.Models.Response;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
 
 namespace CDD.Web.Controllers
 {
@@ -24,7 +25,7 @@ namespace CDD.Web.Controllers
         /// 查詢盡職調查案件列表（Mock 資料）
         /// </summary>
         [HttpPost("Search")]
-        public async Task<ApiResponse<List<CaseItem>>> Search([FromBody] SearchFilters filters)
+        public async Task<ApiResponse<List<CaseItem>>> Search([FromBody] SearchCasesReq req)
         {
             var mockItems = new List<CaseItem>
             {
@@ -127,18 +128,42 @@ namespace CDD.Web.Controllers
         public bool? Selected { get; set; }
     }
 
-    public class SearchFilters
+    /// <summary>
+    /// 案件查詢的請求模型 (Request DTO)
+    /// </summary>
+    public class SearchCasesReq
     {
-        public string Branch { get; set; }
-        public string Specialist { get; set; }
-        public string Source { get; set; }
-        public string AccountNumber { get; set; }
-        public string IdNumber { get; set; }
-        public string DateFrom { get; set; }
-        public string DateTo { get; set; }
-        public string ReviewStatus { get; set; }
-        public string Processor { get; set; }
-        public string EnhancedReview { get; set; } // "all" | "yes" | "no"
-        public string FormId { get; set; }
+        [JsonPropertyName("branch")]
+        public string? Branch { get; set; }
+
+        [JsonPropertyName("specialist")]
+        public string? Specialist { get; set; }
+
+        [JsonPropertyName("source")]
+        public string? Source { get; set; }
+
+        [JsonPropertyName("accountNumber")]
+        public string? AccountNumber { get; set; }
+
+        [JsonPropertyName("idNumber")]
+        public string? IdNumber { get; set; }
+
+        [JsonPropertyName("dateFrom")]
+        public string? DateFrom { get; set; }
+
+        [JsonPropertyName("dateTo")]
+        public string? DateTo { get; set; }
+
+        [JsonPropertyName("reviewStatus")]
+        public string? ReviewStatus { get; set; }
+
+        [JsonPropertyName("processor")]
+        public string? Processor { get; set; }
+
+        [JsonPropertyName("enhancedReview")]
+        public string? EnhancedReview { get; set; }
+
+        [JsonPropertyName("formId")]
+        public string? FormId { get; set; }
     }
 }
