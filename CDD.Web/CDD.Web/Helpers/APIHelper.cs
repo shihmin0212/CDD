@@ -290,8 +290,31 @@ namespace CDD.Web.Helpers
             }
         }
 
+        public async Task<ApiCreateFormResp> CallCreateFormApi(CreateFormReq req)
+        {
+            // 這裡假設你有設定 URL["FormCreate"] = "http://localhost:5051/api/Form/Create"
+            string url = _URL["FormCreate"] ?? throw new ArgumentNullException("FormCreate not found in appsetting");
+            var resp = await _request.PostJSON<ApiCreateFormResp>(url, JsonConvert.SerializeObject(req), _apiKeyHeaders);
+            return resp;
+        }
+
+
         #endregion
 
     }
 
+}
+
+public class CreateFormReq
+{
+    public string FormId { get; set; }
+}
+
+public class ApiCreateFormResp
+{
+    public bool Status { get; set; }
+    public int Code { get; set; }
+    public string Exception { get; set; }
+    public string Message { get; set; }
+    public string Result { get; set; }
 }

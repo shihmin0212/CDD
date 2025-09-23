@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CDD.Web.Helpers;
+using CDD.Web.Models.Response;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CDD.Web.Controllers
 {
@@ -6,6 +8,18 @@ namespace CDD.Web.Controllers
     [Route("api/[controller]")]
     public class DueDiligenceController : ControllerBase
     {
+        private readonly APIHelper _apiHelper;
+
+        /// <summary>
+        /// 建構函式
+        /// </summary>
+        /// <param name="logger">日誌記錄器</param>
+        /// <param name="apiHelper">API 輔助工具</param>
+        public DueDiligenceController(
+            APIHelper apiHelper)
+        {
+            _apiHelper = apiHelper;
+        }
         /// <summary>
         /// 查詢盡職調查案件列表（Mock 資料）
         /// </summary>
@@ -67,6 +81,21 @@ namespace CDD.Web.Controllers
 
             return await Task.FromResult(response);
         }
+
+
+        /// <summary>
+        /// 前端呼叫：建立表單流程
+        /// </summary>
+        [HttpPost("CreateForm")]
+        public async Task<IActionResult> CreateForm([FromBody] CreateFormReq req)
+        {
+            // 呼叫 APIHelper 幫你轉呼叫 apiweb
+            var apiResp = await _apiHelper.CallCreateFormApi(req);
+
+            // 只回傳 message
+            return Ok(new { message = apiResp?.Message });
+        }
+
     }
 
     public class ApiResponse<T>

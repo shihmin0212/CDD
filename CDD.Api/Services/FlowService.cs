@@ -230,8 +230,8 @@ public class FlowService
         var updateFlowPayload = new UpdateFlowStatusReq
         {
             AdditionStage = 1,
-            CurrentCustomFlowKey = "RM002_Ver1",
-            CurrentStep = 5,
+            CurrentCustomFlowKey = "KYC_DueDiligence",
+            CurrentStep = 1,
             CustomFlowFromView = false,
             CustomFlowKey = null,
             CustomNextENO = null,
@@ -240,10 +240,10 @@ public class FlowService
             FlowBasicInfoID = 0,
             FlowLog = new FlowLog
             {
-                DocCode = "RM002",
+                DocCode = "KYC",
                 IsAgent = false,
-                SignedID = "00071",
-                SignedName = "林?輝"
+                SignedID = "90597",
+                SignedName = "○○嶽"
             },
             FlowStatus = new FlowStatus
             {
@@ -252,7 +252,7 @@ public class FlowService
                 Button = null,
                 CounterSignedExit = 0,
                 CounterSignList = new List<object>(),
-                CurrentStep = 0,
+                CurrentStep = 1,
                 CustomFlowKey = null,
                 GoCounterSigned = false,
                 HistoryFlow = new List<object>(),
@@ -263,12 +263,12 @@ public class FlowService
             },
             LoginENO = null,
             MultiSign = false,
-            NextCustomFlowKey = "RM002_Ver1",
-            NextStep = 5,
+            NextCustomFlowKey = "KYC_DueDiligence",
+            NextStep = 1,
             SendCase = 0,
             SignedID = null,
             SignedName = null,
-            SignID = "RM002202508260001",
+            SignID = req.formId,
             StageDesignate = 0,
             StepFrom = 0
         };
