@@ -35,6 +35,36 @@
       <div class="loading-text">正在處理中...</div>
     </div>
   </div>
+
+<FloatingHelper title="自然人附件說明">
+  <div class="table-responsive">
+    <table class="table table-bordered table-sm attachment-info-table">
+      <thead class="table-light">
+        <tr>
+          <th style="width: 25%;">項目</th>
+          <th style="width: 37.5%;">說明</th>
+          <th style="width: 37.5%;">檢附文件</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(info, index) in naturalPersonAttachmentInfo" :key="index">
+          <td class="fw-bold">{{ info.item }}</td>
+          <td>{{ info.description }}</td>
+          <td>{{ info.documents }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</FloatingHelper>
+    
+      <nav aria-label="breadcrumb">
+      </nav>
+
+      <div class="sticky-header">
+      </div>
+
+      <div class="content-body">
+      </div>
 </template>
 
 <script setup lang="ts">
@@ -47,6 +77,36 @@ import ProgressBar from './ProgressBar.vue';
 import CustomerInfo from './CustomerInfo.vue';
 import ManagerReview from './ManagerReview.vue';
 import HistoryLog from './HistoryLog.vue';
+import FloatingHelper from './FloatingHelper.vue';
+
+// 【新增】定義附件說明的資料
+const naturalPersonAttachmentInfo = [
+  {
+    item: '市場上開立多戶',
+    description: '(1) 證券及國外商品開立9戶(含)以上\n(2) 信用開立4戶(含)以上\n(3) 期貨開立5戶(含)以上',
+    documents: '1. 證券、信用及海外商品：請檢附B27資料\n2. 期貨：請檢附交易人開戶家數查詢'
+  },
+  {
+    item: '與金融相關之負面新聞或重大案件',
+    description: 'RC100',
+    documents: '' // 此處無內容
+  },
+  {
+    item: '顧客或買賣代理人年齡已達65歲以上',
+    description: '對標出生年、月、日，滿65歲',
+    documents: '符合高齡者須填寫高齡友善關懷辨識問券，除來源為線上開戶，系統會自動起單以外，其餘皆檢附高齡友善關懷問券'
+  },
+  {
+    item: '職業是否為說明欄所述之項目',
+    description: '(1) 職業項目為12、15、16、22~34、36~37者。\n(2) 職業項目為其他，且無填寫公司相關欄位。\n(3) 指定非金融事業或人員：不動產業、律師、會計師、代書(地政士)、銀樓業、公證人、信託(非金融之信託業者)及公司服務提供業註。\n註：\n1.關於法人之籌備或設立事項。\n2.擔任或安排他人擔任公司董事或秘書、合夥之合夥人或在其他法人組織之類似職位。\n3.提供公司、合夥、信託、其他法人或協議註冊之辦公室、營業地址、居住所、通訊或管理地址。\n4.擔任或安排他人擔任信託或其他類似契約性質之受託人或其他相同角色。\n5擔任或安排他人擔任實質持股股東。',
+    documents: '' // 此處無內容
+  },
+  {
+    item: '有擔任買賣代理人且代理多戶或顧客之買賣代理人是否代理多戶',
+    description: '(1) 證券代理10戶(含)以上。\n(2) 期貨及海外商品代理5戶(含)以上。',
+    documents: '1. 證券：【w_esrf6買賣代理戶數查詢表】、【w_csry1買賣代理人清冊】。\n2. 期貨：【KCCSR199被授權人資料清冊】。\n3. 複委託：【B9-01本人、代理人、實質受益人及關係人查詢表】。\n4. OSU：【B9-01本人、代理人、實質受益人及關係人查詢表】。'
+  }
+];
 
 const customerReviewStore = useCustomerReviewStore();
 const message = ref('');
@@ -126,5 +186,10 @@ onMounted(() => {
   padding-top: 1rem;
 }
 
-/* 以下樣式已移至各子元件，故可移除 */
+/* 【新增】附件說明表格的專屬樣式 */
+.attachment-info-table td {
+  white-space: pre-line; /* 讓 \n 換行符號生效 */
+  font-size: 0.85rem;    /* 讓字體小一點，容納更多內容 */
+  vertical-align: middle;
+}
 </style>
