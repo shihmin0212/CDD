@@ -3,8 +3,8 @@
 namespace CDD.API.Models.Response
 {
     /// <summary>
-    /// Step 7. (FlowStage) 取得表單目前流程
-    /// 外部 API: [GET] /api/FlowStageVer2/GetFlowStatus/{signId}
+    /// FSA-002 GetFlowStatus
+    /// GET /FlowStageVer2/GetFlowStatus/{signId}
     /// 輸入參數:
     ///   - signId: 表單編號
     /// 回傳主體:
@@ -13,63 +13,63 @@ namespace CDD.API.Models.Response
     public class GetFlowStatusResp
     {
         /// <summary>
-        /// 流程狀態（FlowStatus）
-        /// 內容包含：目前關卡、下一關卡(若有)、流程識別代碼、表單編號、是否可代理、目前關卡動作、流程狀態碼、歷程、加會資訊等。
+        /// 表單流程資訊
         /// </summary>
         public FlowStatus? FlowStatus { get; set; }
 
         /// <summary>
-        /// 是否成功（IsSuccess）
-        /// 外部 API 執行結果是否成功。
+        /// 是否連接成功
+        /// ex: TRUE
         /// </summary>
         public bool IsSuccess { get; set; }
 
         /// <summary>
-        /// 訊息（ValidationMsg）
-        /// 外部 API 回傳的訊息集合（例如驗證失敗或提示）。
+        /// 驗證訊息
+        /// ex: 成功
         /// </summary>
         public List<string>? ValidationMsg { get; set; }
     }
 
     /// <summary>
-    /// 流程狀態（FlowStatus）
-    /// 對應外部文件之「返回參數」清單。
+    /// 表單流程資訊
     /// </summary>
     public class FlowStatus
     {
         /// <summary>
-        /// 加會單位（CounterSignList）
-        /// 外部文件：加會單位清單。因外部未提供明確結構，暫以 object 表示。
+        /// 1.11 
+        /// 加會單位清單
         /// </summary>
-        public List<object>? CounterSignList { get; set; }
+        public List<string[]>? CounterSignList { get; set; }
 
         /// <summary>
-        /// 目前關卡（CurrentStep）
-        /// 外部文件：目前流程所在的關卡序號。
+        /// 1.2 
+        /// 目前關卡數
+        /// ex: 2
         /// </summary>
         public int CurrentStep { get; set; }
 
         /// <summary>
-        /// 過往流程記錄（HistoryFlow）
-        /// 外部文件：流程歷程紀錄清單。外部未提供明確結構，暫以 object 表示。
+        /// 1.7 
+        /// 歷史流程
         /// </summary>
-        public List<object>? HistoryFlow { get; set; }
+        public List<string[]>? HistoryFlow { get; set; }
 
         /// <summary>
-        /// JBPM UID（JBPMUID）
-        /// 外部文件：流程對應的 JBPM 唯一識別碼。
+        /// 1.6
+        /// JBPM表單流程UID
+        /// ex: b00102615f4dbf02a62b21d4de39c3
         /// </summary>
-        public string JBPMUID { get; set; } = null!;
+        public string? JBPMUID { get; set; }
 
         /// <summary>
-        /// 表單編號（SignID）
-        /// 外部文件：表單編號。
+        /// 1.4
+        /// 表單編號
         /// </summary>
-        public string SignID { get; set; } = null!;
+        public string? SignID { get; set; }
 
         /// <summary>
-        /// 流程目前狀態（Status）
-        /// 外部文件：流程狀態碼（數值），實際意義依外部系統定義。
+        /// 1.1
+        /// 流程狀態
         /// </summary>
         public int Status { get; set; }
 

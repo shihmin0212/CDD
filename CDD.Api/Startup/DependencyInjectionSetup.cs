@@ -280,6 +280,7 @@ namespace CDD.Api.Startup
             services.AddScoped<IRequest, Request>();
 
             services.AddScoped<IFlowStageService, FlowStageService>();
+            services.AddScoped<FlowService>();
             services.AddMemoryCache();
             services.AddSingleton<IMemoryCacheHelper, MemoryCacheHelper>();
 
