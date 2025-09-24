@@ -40,6 +40,15 @@
             return new MyExceptionMessage(4, GeneralErrorTitle, "取得IP失敗", debug);
         }
 
+        public static MyExceptionMessage InValidData(string errorMsg, object? debug = null)
+        {
+            return new MyExceptionMessage(5, GeneralErrorTitle, errorMsg, debug);
+        }
+
+        public static MyExceptionMessage InValidActionResult(string errorMsg, object? debug = null)
+        {
+            return new MyExceptionMessage(6, GeneralErrorTitle, errorMsg, debug);
+        }
 
         public static MyExceptionMessage IsInValidApiKeyPattern(object? debug = null)
         {
@@ -51,11 +60,41 @@
             return new MyExceptionMessage(8, GeneralErrorTitle, "用戶已經存在", debug);
         }
 
+        public static MyExceptionMessage CheckOrCreateFileFolder(string errorMsg = "", object? debug = null)
+        {
+            return new MyExceptionMessage(9, GeneralErrorTitle, errorMsg, debug);
+        }
+
+        public static MyExceptionMessage EncryptBase64ToFileError(string errorMsg = "", object? debug = null)
+        {
+            return new MyExceptionMessage(10, GeneralErrorTitle, errorMsg, debug);
+        }
+
+        public static MyExceptionMessage DecryptFileToBase64Error(string errorMsg = "", object? debug = null)
+        {
+            return new MyExceptionMessage(11, GeneralErrorTitle, errorMsg, debug);
+        }
+
+
+        public static MyExceptionMessage GetImageTypeError(string errorMsg = "", object? debug = null)
+        {
+            return new MyExceptionMessage(12, GeneralErrorTitle, errorMsg, debug);
+        }
+
         public static MyExceptionMessage UploadFileError(string errorMsg = "", object? debug = null)
         {
             return new MyExceptionMessage(13, GeneralErrorTitle, errorMsg, debug);
         }
 
+        public static MyExceptionMessage BusinessUnauthorized(string errorMsg = "", object? debug = null)
+        {
+            return new MyExceptionMessage(14, GeneralErrorTitle, $"Business 未授權" + errorMsg, debug);
+        }
+
+        public static MyExceptionMessage DeleteFileError(string errorMsg = "", object? debug = null)
+        {
+            return new MyExceptionMessage(15, GeneralErrorTitle, $"檔案刪除發生錯誤:" + errorMsg, debug);
+        }
 
         public static MyExceptionMessage Unauthorized(object? debug = null)
         {
