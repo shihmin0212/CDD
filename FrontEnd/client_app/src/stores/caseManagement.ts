@@ -6,8 +6,46 @@ import { ref, reactive, toRaw } from 'vue';
 import { caseManagementService, type ManualCaseData } from '@/services/caseManagementService';
 
 // 介面定義
-export interface CaseItem { id: string; /* ...其他欄位... */ }
-export interface SearchFilters { /* ...篩選欄位... */ }
+export interface CaseItem {
+  id: string;
+  formId: string;
+  branch: string;
+  customerAccount: string;
+  idNumber: string;
+  customerName: string;
+  salesperson: string;
+  reviewStatus: string;
+  source: string;
+  // 使用字串常值型別 (string literal types) 來增加型別安全性
+  enhancedReview: '是' | '否' | '';
+  applicationDate: string;
+  lastModifiedTime: string;
+  currentProcessor: string;
+  // 使用字串常值型別
+  amlStatus: 'queried' | 'pending';
+  // 使用字串常值型別
+  b27Status: 'queried' | 'pending';
+  // C# 的 string? 對應到 string | null
+  detailsLink: string | null;
+  selectable: boolean;
+  // C# 的 bool? 對應到 boolean | null
+  selected: boolean | null;
+}
+
+export interface SearchFilters {
+  branch?: string;
+  specialist?: string;
+  source?: string;
+  accountNumber?: string;
+  idNumber?: string;
+  dateFrom?: string;
+  dateTo?: string;
+  reviewStatus?: string;
+  processor?: string;
+  enhancedReview?: string;
+  formId?: string;
+}
+
 // [新增] 提交結果的介面
 export interface SubmissionResult {
   success: boolean;
