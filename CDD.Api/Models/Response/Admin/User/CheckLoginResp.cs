@@ -1,4 +1,6 @@
-﻿namespace CDD.Api.Models.Response.Admin.User
+﻿using CDD.Api.Models.Shared;
+
+namespace CDD.Api.Models.Response.Admin.User
 {
     /// <summary>
     /// 登入

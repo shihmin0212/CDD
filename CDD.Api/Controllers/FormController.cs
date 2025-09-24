@@ -2,6 +2,7 @@
 using CDD.Api.Helpers;
 using CDD.Api.Libs;
 using CDD.Api.Models.Response;
+using CDD.Api.Models.Shared;
 using CDD.Api.Services;
 using CDD.API.Models.Response;
 using CDD.API.Services.Interfaces;

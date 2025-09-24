@@ -4,6 +4,7 @@ using CDD.Api.Helpers;
 using CDD.Api.Libs;
 using CDD.Api.Models.DTO;
 using CDD.Api.Models.Response;
+using CDD.Api.Models.Shared;
 
 namespace CDD.Api.Middlewares
 {
