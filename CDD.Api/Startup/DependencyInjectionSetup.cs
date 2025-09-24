@@ -20,6 +20,7 @@ using CDD.Api.Repositories;
 using CDD.Api.Services;
 using CDD.API.Services.Interfaces;
 using SurveryProject.Service.Base;
+using CDD.Api.Repositories.Shared;
 
 namespace CDD.Api.Startup
 {
@@ -276,7 +277,6 @@ namespace CDD.Api.Startup
             services.AddScoped<BaseRepository<object>>();
             services.AddScoped<UserRepository>();
             services.AddScoped<SystemRepository>();
-            services.AddScoped<AdminSystemRepository>();
             // TODO：再確認參考其他專案的 IRequest 實作
             services.AddScoped<IRequest, Request>();
 

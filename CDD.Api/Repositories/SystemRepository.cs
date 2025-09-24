@@ -2,6 +2,7 @@
 using Dapper;
 using CDD.Api.Helpers;
 using CDD.Api.Models.DTO;
+using CDD.Api.Repositories.Shared;
 
 namespace CDD.Api.Repositories
 {
