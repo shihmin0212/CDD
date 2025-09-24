@@ -1,10 +1,11 @@
-﻿namespace CDD.Api.Models.Response
+﻿using Newtonsoft.Json;
+
+namespace CDD.Api.Models.Shared
 {
     /// <summary>
-    /// 
+    /// 預設 回應Ajax格式
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class GeneralResp<T> where T : new()
+    public class GeneralResp
     {
         /// <summary>
         /// 
@@ -19,17 +20,24 @@
         /// <summary>
         /// null
         /// </summary>
-        public string? Exception { get; set; } = String.Empty;
+        public string? Exception { get; set; } = string.Empty;
 
         /// <summary>
         /// null
         /// </summary>
-        public string? Message { get; set; } = String.Empty;
+        public string? Message { get; set; } = string.Empty;
+    }
 
+    /// <summary>
+    /// 泛型 回應Ajax格式
+    /// </summary>
+    /// <typeparam name="T">資料類型</typeparam>
+    public class GeneralResp<T> : GeneralResp
+    {
         /// <summary>
-        /// 
+        /// 資料
         /// </summary>
+        [JsonProperty("result")]
         public T? Result { get; set; }
-
     }
 }
