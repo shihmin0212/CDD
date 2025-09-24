@@ -36,7 +36,7 @@ export const caseManagementService = {
   async searchCases(filters: SearchFilters): Promise<CaseItem[]> {
     try {
       const response: AxiosResponse<ApiResponse<CaseItem[]>> = await apiClient.post(
-        '/DueDiligence/Search', 
+        '/CaseInfo/Search', 
         filters
       );
 
@@ -58,7 +58,7 @@ export const caseManagementService = {
     try {
       // 使用 apiClient 發送 POST 請求到新的端點
       const response: AxiosResponse<ApiResponse<SuccessResponse>> = await apiClient.post(
-        '/DueDiligence/CreateForm', 
+        '/CaseInfo/CreateForm', 
         caseData
       );
 

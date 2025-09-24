@@ -27,7 +27,7 @@ if (useFakeData) {
   ];
 
   // 模擬 CaseManagement 的查詢 API
-  mock.onPost('/DueDiligence/Search').reply(config => {
+  mock.onPost('/CaseInfo/Search').reply(config => {
     console.log('📠 [Mock] 攔截到查詢請求:', JSON.parse(config.data));
     return [200, {
         status: true,

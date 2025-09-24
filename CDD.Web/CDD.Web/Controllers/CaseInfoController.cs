@@ -7,7 +7,7 @@ namespace CDD.Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class DueDiligenceController : ControllerBase
+    public class CaseInfoController : ControllerBase
     {
         private readonly APIHelper _apiHelper;
 
@@ -16,7 +16,7 @@ namespace CDD.Web.Controllers
         /// </summary>
         /// <param name="logger">日誌記錄器</param>
         /// <param name="apiHelper">API 輔助工具</param>
-        public DueDiligenceController(
+        public CaseInfoController(
             APIHelper apiHelper)
         {
             _apiHelper = apiHelper;
