@@ -21,3 +21,4 @@
 /CDD.DB/PostgreSQL
 /CDD.DB/SqlServer/data
 /FrontEnd/FrontEnd/.vscode
+FrontEnd/node_modules/
